@@ -1,0 +1,198 @@
+﻿@using CinemaApp.Models
+
+@{
+    ViewBag.Title = "Naslovna";
+    var first = true;
+    var first1 = true;
+    var first2 = true;
+    var i = 0;
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @foreach (var image in (IEnumerable<string>)ViewBag.Images)
+                {
+                    if (first)
+                    {
+                        <li data-target="#myCarousel" data-slide-to="@(i++)" class="active" disable></li>
+                        first = false;
+                    }
+                    else
+                    {
+                        <li data-target="#myCarousel" data-slide-to="@(i++)"></li>
+                    }
+                }
+            </ol>
+
+            <div class="carousel-inner slide-show">
+                @{ var firstImage = true; }
+                @foreach (var image in (IEnumerable<string>)ViewBag.Images)
+                {
+                    if (firstImage)
+                    {
+                        <div class="item active">
+                            <img src="@Url.Content(image)" alt="Image" style="width:100%; max-height: 420px">
+                        </div>
+                        firstImage = false;
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <img src="@Url.Content(image)" alt="Image" style="width:100%; max-height: 420px">
+                        </div>
+                    }
+                }
+            </div>
+
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+        {
+        <div class="container">
+            <div class="uploadBtn">
+                <a class="btn btn-default round-btn" data-target="#UploadModal" data-toggle="modal" style="float: right;">
+                    <span class="glyphicon glyphicon-camera span-right-margin"></span> Ažuriraj fotografije
+                </a>
+            </div>
+            <div class="modal" id="UploadModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <h3>Ažuriraj fotografije</h3>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("_UploadPhotoPartial")
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="home-list col-md-12">
+            <h4 class="homeText" style="font-weight: bold"><span>REPERTOAR</span></h4>
+            <br />
+            <div class="col-md-12 carouselLists">
+                <div class="carousel slide-show" id="myCarousel1">
+                    <div class="carousel-inner">
+                        @foreach (var item in ViewData["movies"] as IList<Movie>)
+                        {
+                            if (first1)
+                            {
+                                <div class="item active">
+                                    <div class="col-xs-2"><a href="@Url.Action("Details", "Movies", new { id = item.MovieId })"><img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" class="img-responsive img-rounded list-img"></a></div>
+                                </div>
+                                first1 = false;
+                            }
+                            else
+                            {
+                                <div class="item">
+                                    <div class="col-xs-2"><a href="@Url.Action("Details", "Movies", new { id = item.MovieId })"><img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" class="img-responsive img-rounded list-img"></a></div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <a class="left carousel-control col-md-1" href="#myCarousel1" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control col-md-1" href="#myCarousel1" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="home-list col-md-12">
+            <h4 class="homeText" style="font-weight: bold"><span>USKORO</span></h4>
+            <br />
+            <div class="col-md-12 carouselLists">
+                <div class="carousel slide-show" id="myCarousel2">
+                    <div class="carousel-inner">
+                        @foreach (var item in ViewData["announcements"] as IList<Movie>)
+                        {
+                            if (first2)
+                            {
+                                <div class="item active">
+                                    <div class="col-xs-2"><a href="@Url.Action("Details", "Movies", new { id = item.MovieId })"><img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" class="img-responsive img-rounded list-img"></a></div>
+                                </div>
+                                first2 = false;
+                            }
+                            else
+                            {
+                                <div class="item">
+                                    <div class="col-xs-2"><a href="@Url.Action("Details", "Movies", new { id = item.MovieId })"><img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" class="img-responsive img-rounded list-img"></a></div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <a class="left carousel-control col-md-1" href="#myCarousel2" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control col-md-1" href="#myCarousel2" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $('#myCarousel1').carousel({
+        interval: 5000
+    });
+
+    $('#myCarousel1 .carousel-inner .item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        for (var i = 0; i < 4; i++) {
+            next = next.next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+    $('#myCarousel2').carousel({
+        interval: 5000
+    });
+
+    $('#myCarousel2 .carousel-inner .item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        for (var i = 0; i < 4; i++) {
+            next = next.next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+    $('#myCarousel2 .carousel-inner .item img').hover(function () {
+        $(this).sl
+    });
+    
+</script>

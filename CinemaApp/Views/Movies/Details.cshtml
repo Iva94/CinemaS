@@ -1,0 +1,96 @@
+﻿@model CinemaApp.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <img class="coverImage" src="~/Images/@Html.DisplayFor(model => model.CoverImage)" alt="CoverPhoto" style="width:100%; height: auto;">
+    </div>
+    <div class="row margin-left margin-right-20">
+        <div class="movie-header">
+            <div class="col-md-offset-3 col-md-9 col-lg-offset-3 col-lg-9 movie-header-data" style="top: auto; position: absolute;">
+                <h1>
+                    @Html.DisplayFor(model => model.MovieTitle)
+                    @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                    {
+                        <a class="btn btn-default round-btn" data-target="#DeleteMovieModal" data-toggle="modal" href="@Url.Action("Delete", "Movies", new { id = Model.MovieId  })" style="color: rgba(0, 0, 0, 0.8); border: 1px solid white; float: right; text-decoration: none; margin-right: 10px"><span class="glyphicon glyphicon-trash"></span> Brisanje </a>
+                        <a class="mini-btn btn btn-default round-btn" href="@Url.Action("Edit", "Movies", new { id = Model.MovieId  })" style="color: rgba(0, 0, 0, 0.8); text-decoration: none; float: right; margin-right: 10px"><span class="glyphicon glyphicon-pencil"></span> Izmjena</a>
+                    }
+                </h1>
+                <p>
+                    @Html.DisplayFor(model => model.OriginalTitle) |
+                    @Html.DisplayFor(model => model.Genre1.GenreName) |
+                    @Html.DisplayFor(model => model.Duration)
+                </p>
+            </div>
+            <div class="col-md-3 col-lg-3 movie-header-img">
+                <img src="~/Images/@Html.DisplayFor(model => model.Image)" class="img-responsive img-rounded img-thumbnail" style="width:100%; height: auto;" />
+            </div>
+        </div>
+        <div class="other">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="margin-left: 10px; min-height: 150px;">
+                <h3><span class="glyphicon glyphicon-book margin-right-10"></span>@Html.DisplayNameFor(model => model.Synopsis)</h3>
+                <p style="font-size: 16px; text-align: justify;">@Html.DisplayFor(model => model.Synopsis)</p>
+                <hr class="hr-gray" />
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <h3>Informacije o filmu</h3>
+                <br />
+                <p style="font-size: 16px;">
+                    <b>@Html.DisplayNameFor(model => model.Director):</b>   @Html.DisplayFor(model => model.Director) <br /> <br />
+                    <b>@Html.DisplayNameFor(model => model.Actors):</b>   @Html.DisplayFor(model => model.Actors) <br /><br />
+                    <b>@Html.DisplayNameFor(model => model.PremiereDate):</b>  @Model.PremiereDate.Value.ToString("dd. MMMM yyyy.", ViewBag.Culture)<br /><br />
+                </p>
+                <hr class="hr-gray" />
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="margin-left: 10px">
+                <h3><span class="glyphicon glyphicon-film margin-right-10"></span> @Html.DisplayNameFor(model => model.Video)</h3>
+                <br />
+                <div>
+                    <iframe width="750" height="350" src=@("http://www.youtube.com/embed/" + Html.DisplayFor(model => model.Video)) frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        @if (Model.IsAnnouncement == false)
+        {
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <br />
+                <hr class="hr-gray" />
+                <div class="form-group">
+                    <br />
+                    <h4>Izaberite vrijeme projekcije i rezervišite sjedište: </h4>
+                    <br />
+                    <table class="table table-responsive table-bordered projectionsTable">
+                        <tbody>
+                            @foreach (var date in ViewData["MovieProjectionDates"] as IList<String>)
+                            {
+                                <tr>
+                                    <td class="projection-date">@date</td>
+                                    <td>
+                                        @foreach (var item in Model.Projections)
+                                        {
+                                            if (item.DateTime.Value.ToString("dd. MMMM", ViewBag.Culture) == date)
+                                            {
+                                                <a class="movie-projection-btn" href="@Url.Action("ReservateTickets", "Movies", new { movieId = item.MovieId, projectionId = item.ProjectionId  })">@item.DateTime.Value.ToShortTimeString()</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal" id="DeleteMovieModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>

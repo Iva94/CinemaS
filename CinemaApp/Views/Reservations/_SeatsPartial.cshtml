@@ -1,0 +1,26 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.ReservedSeat>
+
+<div class="row">
+    @foreach (var item in ViewData["seats"] as IList<Seat>)
+    {
+        <div class="col-md-6">
+            <h3>
+                @*@Html.DisplayFor(modelItem => item.Auditorium.AuditoriumName)*@
+                @*<button>@Html.ActionLink("", "AddSeat", Object reference not set to an instance of an object.'
+        new { auditoriumId = item.AuditoriumId })</button>*@
+            </h3>
+            <div style="width:400px">
+                @for (var i = 1; i <= item.Auditorium.NumberOfRows; i++)
+                {
+                    <label>@((char)('A' + (i - 1)))</label>
+                    for (var j = 1; j <= item.Auditorium.NumberOfColumns; j++)
+                    {
+                        <button style="width: 30px">@j</button>
+                    }
+                    <br />
+                }
+            </div>
+        </div>
+    }
+</div>

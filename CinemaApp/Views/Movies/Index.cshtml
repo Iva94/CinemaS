@@ -1,0 +1,21 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.Movie>
+
+@{
+    ViewBag.Title = "Filmovi";
+}
+
+<div class="container">
+    <h2 class="page-title">
+        Filmovi
+        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+        {
+            <a class="btn btn-default noborder margin-right-6" href="@Url.Action("Create", "Movies")" style="float:right">
+                <span class="glyphicon glyphicon-plus"></span>  Dodaj novi film
+            </a>
+        }
+    </h2>
+    <hr class="hr-shadow" />
+    <br />
+    @Html.Partial("_AllMoviesPartial")
+</div>

@@ -1,0 +1,209 @@
+﻿@model CinemaApp.Models.Movie
+
+@{
+    ViewBag.Title = "Novi film";
+}
+
+<br />
+<div class="container" align="center">
+    @using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+     @Html.AntiForgeryToken()
+    <div class="form-horizontal my-background big-form" align="center">
+        <h2 class="page-title text-center">Novi film</h2>
+        <hr class="hr-gray nomargin" />
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.MovieTitle, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.MovieTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MovieTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OriginalTitle, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.OriginalTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OriginalTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Director, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Actors, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Actors, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Actors, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PremiereDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.PremiereDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.PremiereDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownList("Genre", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Synopsis, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.Synopsis, 3, 32, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Synopsis, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Video, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Video, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsAnnouncement, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsAnnouncement, "Nije odabrano", new { htmlAttributes = new { @class = "form-control", @type = "checkbox", @checked = true } })
+                        @Html.ValidationMessageFor(model => model.IsAnnouncement, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label>Poster </label>
+                </div>
+                <div class="col-md-8">
+                    <div id="posterUploadBtn" class="btn btn-default btn-block">
+                        <input type="file" name="ImageFile" id="ImageFile" role="button" aria-label="Dodaj poster" tabindex="-1" style="font-size: 70px; height: 20px; width: 537px; opacity: 0;">
+                        <span class="glyphicon glyphicon-upload"> </span>
+                        <h4> Dodaj poster </h4>
+                    </div>
+                    <div id="posterDiv" class="row btn-block" style="display:none; visibility: hidden">
+                        <img id="newPoster" src="#" class="img-responsive" alt="" style=" display: none; width: auto; height: auto; max-width: 150px; max-height: 200px; background-size: cover; margin-left: 5px; margin-bottom: 5px;">
+                        <button type="button" id="removePosterBtn" class="btn btn-danger"> Ukloni</button>
+                    </div>
+                </div>
+                </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label>Naslovna fotografija </label>
+                </div>
+                <div class="col-md-8">
+                    <div id="coverUploadBtn" class="btn btn-default btn-block">
+                        <input type="file" name="CoverImageFile" id="CoverImageFile" role="button" aria-label="Dodaj naslovnu fotografiju" tabindex="-1" style="font-size: 70px; height: 20px; width: 537px; opacity: 0;">
+                        <span class="glyphicon glyphicon-upload"> </span>
+                        <h4> Dodaj naslovnu fotografiju </h4>
+                    </div>
+                    <div id="coverDiv" class="row btn-block" style="display:none; visibility: hidden;">
+                        <img id="newCover" src="#" class="img-responsive" alt="" style="display: none; width: auto; height: auto; max-width: 350px;  max-height: 300px;  background-size: cover; margin-left: 5px; margin-bottom: 5px;">
+                        <button type="button" id="removeCoverBtn" class="btn btn-danger"> Ukloni</button>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+        </div>
+        <div class="col-md-12">
+            <hr class="hr-gray"/>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" value="Sačuvaj" class="btn btn-success" />
+                <a class="btn btn-default" href="@Url.Action("Index", "Movies")"> Odustani </a>
+            </div>
+        </div>
+    </div>
+     }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        
+        function readPosterURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#newPoster').attr('src', e.target.result);
+                    $('#newPoster').css('display', 'block');
+                    $('#posterUploadBtn').css('display', 'none');
+                    $('#posterUploadBtn').css('visibility', 'hidden');
+                    $('#posterDiv').css('display', 'block');
+                    $('#posterDiv').css('visibility', 'visible');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#ImageFile").change(function () {
+            readPosterURL(this);
+        });
+
+        function readCoverURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#newCover').attr('src', e.target.result);
+                    $('#newCover').css('display', 'block');
+                    $('#coverUploadBtn').css('display', 'none');
+                    $('#coverUploadBtn').css('visibility', 'hidden');
+                    $('#coverDiv').css('display', 'block');
+                    $('#coverDiv').css('visibility', 'visible');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#CoverImageFile").change(function () {
+            readCoverURL(this);
+        });
+
+
+        $("#removePosterBtn").click(function () {
+            $('#posterDiv').css('display', 'none');
+            $('#posterDiv').css('visibility', 'hidden');
+            $('#posterUploadBtn').css('display', 'block');
+            $('#posterUploadBtn').css('visibility', 'visible');
+        });
+
+        $("#removeCoverBtn").click(function () {
+            $('#coverDiv').css('display', 'none');
+            $('#coverDiv').css('visibility', 'hidden');
+            $('#coverUploadBtn').css('display', 'block');
+            $('#coverUploadBtn').css('visibility', 'visible');
+        });
+
+    </script>
+}

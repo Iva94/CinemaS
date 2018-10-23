@@ -1,0 +1,965 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="cinemaDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Auditorium">
+          <Key>
+            <PropertyRef Name="AuditoriumId" />
+          </Key>
+          <Property Name="AuditoriumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditoriumName" Type="varchar" MaxLength="50" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="NumberOfRows" Type="int" />
+          <Property Name="NumberOfColumns" Type="int" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="GenreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenreName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieTitle" Type="varchar" MaxLength="64" />
+          <Property Name="OriginalTitle" Type="varchar" MaxLength="64" />
+          <Property Name="PremiereDate" Type="datetime" />
+          <Property Name="Director" Type="varchar" MaxLength="128" />
+          <Property Name="Actors" Type="varchar" MaxLength="265" />
+          <Property Name="Synopsis" Type="text" />
+          <Property Name="Duration" Type="varchar" MaxLength="16" />
+          <Property Name="Image" Type="varchar" MaxLength="2048" />
+          <Property Name="Video" Type="varchar" MaxLength="2048" />
+          <Property Name="IsAnnouncement" Type="bit" />
+          <Property Name="CoverImage" Type="varchar(max)" />
+          <Property Name="Genre" Type="int" />
+        </EntityType>
+        <EntityType Name="Projection">
+          <Key>
+            <PropertyRef Name="ProjectionId" />
+          </Key>
+          <Property Name="ProjectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="AuditoriumId" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="TicketPrice" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationId" />
+          </Key>
+          <Property Name="ReservationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectionId" Type="int" Nullable="false" />
+          <Property Name="NumberOfTickets" Type="int" />
+          <Property Name="TotalPrice" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ReservationTime" Type="datetime" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="ExpireTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReservedSeat">
+          <Key>
+            <PropertyRef Name="ReservedSeatId" />
+          </Key>
+          <Property Name="ReservedSeatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReservationId" Type="int" Nullable="false" />
+          <Property Name="SeatId" Type="int" Nullable="false" />
+          <Property Name="ProjectionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="SeatId" />
+          </Key>
+          <Property Name="SeatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditoriumId" Type="int" Nullable="false" />
+          <Property Name="Row" Type="char" MaxLength="4" />
+          <Property Name="Number" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="SpecialOffers">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OfferName" Type="varchar" MaxLength="32" />
+          <Property Name="Description" Type="text" />
+          <Property Name="OfferImage" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="ClaimId" />
+          </Key>
+          <Property Name="ClaimId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_UserClaim_dbo_User_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserLogin_dbo_User_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserRole_dbo_Role_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserRole_dbo_User_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="GenreId" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECTI_MOVIE_PRO_MOVIE">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projection" Type="Self.Projection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="Projection">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projection_Auditorium">
+          <End Role="Auditorium" Type="Self.Auditorium" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projection" Type="Self.Projection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auditorium">
+              <PropertyRef Name="AuditoriumId" />
+            </Principal>
+            <Dependent Role="Projection">
+              <PropertyRef Name="AuditoriumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAT_RESERVATI_PROJECTI">
+          <End Role="Projection" Type="Self.Projection" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projection">
+              <PropertyRef Name="ProjectionId" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ProjectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_PROJECTIO_PROJECTI">
+          <End Role="Projection" Type="Self.Projection" Multiplicity="1" />
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projection">
+              <PropertyRef Name="ProjectionId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="ProjectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_RESERVED__SEAT">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="SeatId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_SEAT_RESE_RESERVAT">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ReservationId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="ReservationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seat_Auditorium">
+          <End Role="Auditorium" Type="Self.Auditorium" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seat" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auditorium">
+              <PropertyRef Name="AuditoriumId" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="AuditoriumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cinemaDatabaseModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Auditorium" EntityType="Self.Auditorium" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projection" EntityType="Self.Projection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservedSeat" EntityType="Self.ReservedSeat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpecialOffers" EntityType="Self.SpecialOffers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_UserClaim_dbo_User_UserId" Association="Self.FK_dbo_UserClaim_dbo_User_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserLogin_dbo_User_UserId" Association="Self.FK_dbo_UserLogin_dbo_User_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserRole_dbo_Role_RoleId" Association="Self.FK_dbo_UserRole_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserRole_dbo_User_UserId" Association="Self.FK_dbo_UserRole_dbo_User_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre" Association="Self.FK_Movie_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECTI_MOVIE_PRO_MOVIE" Association="Self.FK_PROJECTI_MOVIE_PRO_MOVIE">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Projection" EntitySet="Projection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projection_Auditorium" Association="Self.FK_Projection_Auditorium">
+            <End Role="Auditorium" EntitySet="Auditorium" />
+            <End Role="Projection" EntitySet="Projection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAT_RESERVATI_PROJECTI" Association="Self.FK_RESERVAT_RESERVATI_PROJECTI">
+            <End Role="Projection" EntitySet="Projection" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_PROJECTIO_PROJECTI" Association="Self.FK_RESERVED_PROJECTIO_PROJECTI">
+            <End Role="Projection" EntitySet="Projection" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_RESERVED__SEAT" Association="Self.FK_RESERVED_RESERVED__SEAT">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_SEAT_RESE_RESERVAT" Association="Self.FK_RESERVED_SEAT_RESE_RESERVAT">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seat_Auditorium" Association="Self.FK_Seat_Auditorium">
+            <End Role="Auditorium" EntitySet="Auditorium" />
+            <End Role="Seat" EntitySet="Seat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cinemaDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieTitle" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="OriginalTitle" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PremiereDate" Type="DateTime" Precision="3" />
+          <Property Name="Director" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Actors" Type="String" MaxLength="265" FixedLength="false" Unicode="false" />
+          <Property Name="Synopsis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <Property Name="Video" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Projections" Relationship="Self.FK_PROJECTI_MOVIE_PRO_MOVIE" FromRole="Movie" ToRole="Projection" />
+          <Property Name="IsAnnouncement" Type="Boolean" />
+          <Property Name="CoverImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="Int32" />
+          <NavigationProperty Name="Genre1" Relationship="cinemaDatabaseModel.FK_Movie_Genre" FromRole="Movie" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="Projection">
+          <Key>
+            <PropertyRef Name="ProjectionId" />
+          </Key>
+          <Property Name="ProjectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieId" Type="Int32" Nullable="false" />
+          <Property Name="AuditoriumId" Type="Int32" Nullable="false" />
+          <Property Name="TicketPrice" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_PROJECTI_MOVIE_PRO_MOVIE" FromRole="Projection" ToRole="Movie" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_RESERVAT_RESERVATI_PROJECTI" FromRole="Projection" ToRole="Reservation" />
+          <NavigationProperty Name="ReservedSeats" Relationship="Self.FK_RESERVED_PROJECTIO_PROJECTI" FromRole="Projection" ToRole="ReservedSeat" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Auditorium" Relationship="cinemaDatabaseModel.FK_Projection_Auditorium" FromRole="Projection" ToRole="Auditorium" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationId" />
+          </Key>
+          <Property Name="ReservationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectionId" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfTickets" Type="Int32" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projection" Relationship="Self.FK_RESERVAT_RESERVATI_PROJECTI" FromRole="Reservation" ToRole="Projection" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Reservation_User" FromRole="Reservation" ToRole="User" />
+          <NavigationProperty Name="ReservedSeats" Relationship="Self.FK_RESERVED_SEAT_RESE_RESERVAT" FromRole="Reservation" ToRole="ReservedSeat" />
+          <Property Name="ReservationTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpireTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ReservedSeat">
+          <Key>
+            <PropertyRef Name="ReservedSeatId" />
+          </Key>
+          <Property Name="ReservedSeatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReservationId" Type="Int32" Nullable="false" />
+          <Property Name="SeatId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Projection" Relationship="Self.FK_RESERVED_PROJECTIO_PROJECTI" FromRole="ReservedSeat" ToRole="Projection" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_RESERVED_SEAT_RESE_RESERVAT" FromRole="ReservedSeat" ToRole="Reservation" />
+          <NavigationProperty Name="Seat" Relationship="Self.FK_RESERVED_RESERVED__SEAT" FromRole="ReservedSeat" ToRole="Seat" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.UserRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="SeatId" />
+          </Key>
+          <Property Name="SeatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditoriumId" Type="Int32" Nullable="false" />
+          <Property Name="Row" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Number" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ReservedSeats" Relationship="Self.FK_RESERVED_RESERVED__SEAT" FromRole="Seat" ToRole="ReservedSeat" />
+          <NavigationProperty Name="Auditorium" Relationship="cinemaDatabaseModel.FK_Seat_Auditorium" FromRole="Seat" ToRole="Auditorium" />
+        </EntityType>
+        <EntityType Name="SpecialOffer">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfferName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OfferImage" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_User" FromRole="User" ToRole="Reservation" />
+          <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_UserClaim_dbo_User_UserId" FromRole="User" ToRole="UserClaim" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogin_dbo_User_UserId" FromRole="User" ToRole="UserLogin" />
+          <NavigationProperty Name="Roles" Relationship="Self.UserRole" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="ClaimId" />
+          </Key>
+          <Property Name="ClaimId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserClaim_dbo_User_UserId" FromRole="UserClaim" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserLogin_dbo_User_UserId" FromRole="UserLogin" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PROJECTI_MOVIE_PRO_MOVIE">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projection" Type="Self.Projection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="Projection">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAT_RESERVATI_PROJECTI">
+          <End Role="Projection" Type="Self.Projection" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projection">
+              <PropertyRef Name="ProjectionId" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ProjectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_PROJECTIO_PROJECTI">
+          <End Role="Projection" Type="Self.Projection" Multiplicity="1" />
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projection">
+              <PropertyRef Name="ProjectionId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="ProjectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_SEAT_RESE_RESERVAT">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ReservationId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="ReservationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVED_RESERVED__SEAT">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
+          <End Role="ReservedSeat" Type="Self.ReservedSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="SeatId" />
+            </Principal>
+            <Dependent Role="ReservedSeat">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserClaim_dbo_User_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserLogin_dbo_User_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="cinemaDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="Projections" EntityType="Self.Projection" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="ReservedSeats" EntityType="Self.ReservedSeat" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Seats" EntityType="Self.Seat" />
+          <EntitySet Name="SpecialOffers" EntityType="Self.SpecialOffer" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
+          <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+          <AssociationSet Name="FK_PROJECTI_MOVIE_PRO_MOVIE" Association="Self.FK_PROJECTI_MOVIE_PRO_MOVIE">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Projection" EntitySet="Projections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAT_RESERVATI_PROJECTI" Association="Self.FK_RESERVAT_RESERVATI_PROJECTI">
+            <End Role="Projection" EntitySet="Projections" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_PROJECTIO_PROJECTI" Association="Self.FK_RESERVED_PROJECTIO_PROJECTI">
+            <End Role="Projection" EntitySet="Projections" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_SEAT_RESE_RESERVAT" Association="Self.FK_RESERVED_SEAT_RESE_RESERVAT">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVED_RESERVED__SEAT" Association="Self.FK_RESERVED_RESERVED__SEAT">
+            <End Role="Seat" EntitySet="Seats" />
+            <End Role="ReservedSeat" EntitySet="ReservedSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserClaim_dbo_User_UserId" Association="Self.FK_dbo_UserClaim_dbo_User_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserClaim" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserLogin_dbo_User_UserId" Association="Self.FK_dbo_UserLogin_dbo_User_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLogin" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole" Association="Self.UserRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Genres" EntityType="cinemaDatabaseModel.Genre" />
+          <AssociationSet Name="FK_Movie_Genre" Association="cinemaDatabaseModel.FK_Movie_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Movie" EntitySet="Movies" />
+          </AssociationSet>
+          <EntitySet Name="Auditoriums" EntityType="cinemaDatabaseModel.Auditorium" />
+          <AssociationSet Name="FK_Projection_Auditorium" Association="cinemaDatabaseModel.FK_Projection_Auditorium">
+            <End Role="Auditorium" EntitySet="Auditoriums" />
+            <End Role="Projection" EntitySet="Projections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seat_Auditorium" Association="cinemaDatabaseModel.FK_Seat_Auditorium">
+            <End Role="Auditorium" EntitySet="Auditoriums" />
+            <End Role="Seat" EntitySet="Seats" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="GenreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Movies" Relationship="cinemaDatabaseModel.FK_Movie_Genre" FromRole="Genre" ToRole="Movie" />
+          <Property Name="GenreName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Movie_Genre">
+          <End Type="cinemaDatabaseModel.Genre" Role="Genre" Multiplicity="0..1" />
+          <End Type="cinemaDatabaseModel.Movie" Role="Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="GenreId" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Auditorium">
+          <Key>
+            <PropertyRef Name="AuditoriumId" />
+          </Key>
+          <Property Name="AuditoriumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditoriumName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="NumberOfRows" Type="Int32" />
+          <Property Name="NumberOfColumns" Type="Int32" />
+          <NavigationProperty Name="Projections" Relationship="cinemaDatabaseModel.FK_Projection_Auditorium" FromRole="Auditorium" ToRole="Projection" />
+          <NavigationProperty Name="Seats" Relationship="cinemaDatabaseModel.FK_Seat_Auditorium" FromRole="Auditorium" ToRole="Seat" />
+        </EntityType>
+        <Association Name="FK_Projection_Auditorium">
+          <End Type="cinemaDatabaseModel.Auditorium" Role="Auditorium" Multiplicity="1" />
+          <End Type="cinemaDatabaseModel.Projection" Role="Projection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auditorium">
+              <PropertyRef Name="AuditoriumId" />
+            </Principal>
+            <Dependent Role="Projection">
+              <PropertyRef Name="AuditoriumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seat_Auditorium">
+          <End Type="cinemaDatabaseModel.Auditorium" Role="Auditorium" Multiplicity="1" />
+          <End Type="cinemaDatabaseModel.Seat" Role="Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auditorium">
+              <PropertyRef Name="AuditoriumId" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="AuditoriumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cinemaDatabaseModelStoreContainer" CdmEntityContainer="cinemaDatabaseEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="CoverImage" ColumnName="CoverImage" />
+                <ScalarProperty Name="IsAnnouncement" ColumnName="IsAnnouncement" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="MovieTitle" ColumnName="MovieTitle" />
+                <ScalarProperty Name="OriginalTitle" ColumnName="OriginalTitle" />
+                <ScalarProperty Name="PremiereDate" ColumnName="PremiereDate" />
+                <ScalarProperty Name="Director" ColumnName="Director" />
+                <ScalarProperty Name="Actors" ColumnName="Actors" />
+                <ScalarProperty Name="Synopsis" ColumnName="Synopsis" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projections">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Projection">
+              <MappingFragment StoreEntitySet="Projection">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ProjectionId" ColumnName="ProjectionId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="AuditoriumId" ColumnName="AuditoriumId" />
+                <ScalarProperty Name="TicketPrice" ColumnName="TicketPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="ExpireTime" ColumnName="ExpireTime" />
+                <ScalarProperty Name="ReservationTime" ColumnName="ReservationTime" />
+                <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
+                <ScalarProperty Name="ProjectionId" ColumnName="ProjectionId" />
+                <ScalarProperty Name="NumberOfTickets" ColumnName="NumberOfTickets" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservedSeats">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.ReservedSeat">
+              <MappingFragment StoreEntitySet="ReservedSeat">
+                <ScalarProperty Name="ReservedSeatId" ColumnName="ReservedSeatId" />
+                <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
+                <ScalarProperty Name="SeatId" ColumnName="SeatId" />
+                <ScalarProperty Name="ProjectionId" ColumnName="ProjectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seats">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Seat">
+              <MappingFragment StoreEntitySet="Seat">
+                <ScalarProperty Name="SeatId" ColumnName="SeatId" />
+                <ScalarProperty Name="AuditoriumId" ColumnName="AuditoriumId" />
+                <ScalarProperty Name="Row" ColumnName="Row" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialOffers">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.SpecialOffer">
+              <MappingFragment StoreEntitySet="SpecialOffers">
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="OfferName" ColumnName="OfferName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OfferImage" ColumnName="OfferImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="cinemaDatabaseModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Auditoriums">
+            <EntityTypeMapping TypeName="cinemaDatabaseModel.Auditorium">
+              <MappingFragment StoreEntitySet="Auditorium">
+                <ScalarProperty Name="NumberOfColumns" ColumnName="NumberOfColumns" />
+                <ScalarProperty Name="NumberOfRows" ColumnName="NumberOfRows" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="AuditoriumName" ColumnName="AuditoriumName" />
+                <ScalarProperty Name="AuditoriumId" ColumnName="AuditoriumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

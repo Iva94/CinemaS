@@ -1,0 +1,51 @@
+﻿@model CinemaApp.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container" align="center">
+    <div class="profile-background">
+        <div class="profile-header">
+            <h2 class="nomargin"> @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName) </h2>
+        </div>
+        <div class="row profile-body">
+            <div class="col-md-3" align="center">
+                <img src="~/Content/Images/user.png" width="70" height="70" class="margin-20" style="opacity: 0.9" />
+            </div>
+            <div class="col-md-8">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <b>Ime i prezime</b>
+                        </td>
+                        <td>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.UserName)</b>
+                        </td>
+                        <td>@Html.DisplayFor(model => model.UserName)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.Email)</b>
+                        </td>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.PhoneNumber)</b>
+                        </td>
+                        <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="profile-footer" align="right">
+            <a class="btn btn-default" href="@Url.Action("Edit", "Users", new { id = Model.UserId })">
+                <span class="glyphicon glyphicon-pencil"></span> Izmjena
+             </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1284 @@
+﻿body {
+    background-color: #eae3d8;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    padding-top: 50px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.form-label {
+    margin-bottom: 5px;
+}
+
+a {
+    color: #444343;
+}
+
+a:hover {
+    color: #2b2a2a;
+}
+
+/*Navbar*/
+.nav-name {
+    color: #76323F;
+    padding-top: 0px;
+    font: italic bold 30px/50px "Comic Sans MS", serif;
+}
+
+.navbar-inverse .navbar-header {
+    margin-left: 30px;
+    margin-right: 100px;
+}
+
+.myNavbar {
+    /*background-color: #dcd0c0;*/
+    background-color: rgba(220, 208, 192, 0.85);
+}
+
+.navbar-inverse .navbar-header > a {
+    color: #76323F;
+}
+
+.navbar-inverse .navbar-header > a:hover {
+    color: #90525e;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #565656;
+    font-weight: bold;
+}
+
+.navbar-inverse .loginNav > li > a {
+    font-weight: 300;
+}
+
+.navbar-inverse .loginNav > li > a:hover {
+    color: #90525e;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #90525e;
+}
+
+.navbar-inverse .navbar-nav > li.activePage > a {
+    color: #76323F;
+}
+
+.navbar-inverse {
+    border-color: #cec0aa;
+}
+
+#user-img {
+    opacity: 0.6;
+    margin-right: 5px
+}
+/*Navbar*/
+
+/*Dropdown*/
+.dropbtn {
+    padding: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    background-color: #eae3d8;
+    min-width: 140px;
+    width: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #565656;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: #90525e;
+}
+
+.dropdown-content > li.activePage > a {
+    color: #76323F;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #90525e;
+}
+
+.dropdown .dropdown-content li.nav-divider {
+    background-color: #cec0aa;
+}
+/*Dropdown*/
+
+/*Carousel*/
+.jumbotron {
+    padding: 0px !important;
+}
+
+.homeUploadImg {
+    width: auto;
+    height: auto;
+    margin-bottom: 20px;
+    max-height: 300px;
+    max-width: 500px;
+}
+
+#buttons input{
+    margin: 5px;
+}
+
+.slide-show {
+    min-height: 150px;
+    max-height: 420px;
+}
+/*Carousel*/
+
+/*Home page*/
+.homeText {
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid gray;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    color: #76323F;
+}
+
+.homeText span {
+    float: left;
+    background: #eae3d8;
+    padding: 0 20px;
+}
+.home-list {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /*min-height: 250px;*/
+}
+
+.list-img:hover {
+    width: 99%;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.carouselLists .carousel-inner .active.left {
+    left: -25%;
+}
+
+.carouselLists .carousel-inner .next {
+    left: 25%;
+}
+
+.carouselLists .carousel-inner .prev {
+    left: -25%;
+}
+
+.carouselLists .carousel-control {
+    width: 5%;
+}
+
+.carouselLists .carousel-control.left {
+    margin-left: 15px;
+    margin-right: 15px;
+    background-image: none;
+}
+
+.carouselLists .carousel-control.right {
+    margin-left: 15px;
+    margin-right: 15px;
+    background-image: none;
+}
+
+.round-btn {
+    min-width: 110px;
+    margin: 5px;
+    border-radius: 15px 15px;
+}
+
+#removeImageSpan {
+    color: #e44e4a;
+    font-size: larger;
+}
+
+#removeImageSpan:hover {
+    font-size: x-large;
+}
+/*Home page*/
+
+/*Footer*/
+footer {
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.footer {
+    min-width: 150px;
+    width: auto;
+    height: auto;
+    border-top: 1px solid #cfcfcf;
+    padding-left: 95px;
+    padding-right: 95px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    color: white;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.footer-margins {
+    margin: 5px;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #cfcfcf;
+    margin-bottom: 20px;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-title {
+    color: #eee9e9
+}
+
+.footer-text {
+    color: #cfcfcf
+}
+
+.social-media img {
+    opacity: 0.8;
+}
+
+.social-media img:hover {
+    opacity: 1;
+}
+
+.copyRight {
+    color: #cfcfcf;
+    margin-left: 45%;
+    margin-bottom: 0;
+}
+/*Footer*/
+
+.span-right-margin {
+    margin-right: 10px;
+}
+
+.margin-20 {
+    margin: 20px;
+}
+
+.margin-left {
+    margin-left: 20px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-right-20 {
+    margin-right: 20px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.main-container {
+    min-height: 630px;
+}
+
+label {
+    color: #444343;
+}
+
+.register-form {
+    margin-left: 20px;
+    padding: 0px 10px 5px;
+}
+
+.page-title {
+    color: #565656;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+/*Profile*/
+.profile-background {
+    margin: 50px 15px;
+    color: rgba(0,0,0,0.8);
+    background-color: white;
+    border: 1px solid #cec0aa;
+    border-radius: 10px;
+    max-width: 700px;
+}
+
+.profile-background .profile-header {
+    padding: 15px;
+    background-color: #cec0aa;
+    color: #76323F;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.profile-body {
+    padding: 20px;
+}
+
+.profile-background .profile-footer {
+    padding: 10px;
+    background-color: #f1e7da;
+    border-radius: 0px 0px 10px 10px;
+}
+/*Profile*/
+
+/*Users*/
+.userTabs {
+    font-size: large;
+    font-weight: bold;
+}
+
+.userTabs li a {
+    color: #76323F;
+}
+
+.userTable{
+    margin-top: 3px;
+}
+.userTable tr{
+    font-size: 16px;
+}
+
+/*Users*/
+
+.my-background {
+    color: #444343;
+    background-color: #f1e7da;
+    margin: 30px 15px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5);
+}
+
+.my-background2 {
+    color: #444343;
+    background-color: #f1e7da;
+    margin: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #cec0aa;
+}
+
+.my-btn.active {
+    background-color: #76323F;
+    color: white;
+}
+
+.small-form {
+    width: auto;
+    height: auto;
+    min-height: 200px;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.xs-form {
+    width: auto;
+    height: auto;
+    min-height: 200px;
+    min-width: 300px;
+    max-width: 350px;
+}
+
+.big-form {
+    width: auto;
+    height: auto;
+    min-height: 200px;
+    min-width: 300px;
+}
+
+.about h3 {
+    color: #76323F;
+}
+
+.about {
+    padding: 20px;
+    width: auto;
+    max-width: 800px;
+}
+
+.about p {
+    font-size: 16px;
+}
+
+/*Screen and seats*/
+.screen {
+    width: 350px;
+    height: 20px;
+    padding-left: 20px;
+}
+
+.outer-mask {
+    position: absolute;
+    width: 330px;
+    height: 20px;
+    overflow: hidden;
+    -webkit-transform: skew(-30deg, 0deg);
+    -ms-transform: skew(-30deg, 0deg);
+    -o-transform: skew(-30deg, 0deg);
+    transform: skew(-30deg, 0deg);
+}
+
+.inner-mask {
+    position: absolute;
+    left: -30px;
+    width: 330px;
+    height: 20px;
+    overflow: hidden;
+    -webkit-transform: skew(50deg, 0deg);
+    -ms-transform: skew(50deg, 0deg);
+    -o-transform: skew(50deg, 0deg);
+    transform: skew(50deg, 0deg);
+}
+
+.content {
+    position: absolute;
+    width: 330px;
+    height: 20px;
+    /*background-color: gray;*/
+    border-top: 3px solid #76323F;
+    background: -webkit-linear-gradient(top, #90525e, #f1e7da);
+    background-image: -moz-linear-gradient(top, #90525e, #f1e7da);
+    background-image: -o-linear-gradient(top, #90525e, #f1e7da);
+    background-image: linear-gradient(top, #90525e, #f1e7da);
+}
+
+.box {
+    background-color: #dcd0c0;
+    height: 25px;
+    width: 25px;
+    border-radius: 20%;
+    padding-top: 8px;
+    border-width: 1px 2px 4px;
+    border-color: gray;
+}
+
+.box2 {
+    background-color: #76323F;
+    height: 25px;
+    width: 25px;
+    border-radius: 20%;
+    padding-top: 8px;
+    border-width: 1px 2px 4px;
+    border-color: gray;
+}
+
+.box3 {
+    background-color: #787878;
+    height: 25px;
+    width: 25px;
+    border-radius: 20%;
+    padding-top: 8px;
+    border-width: 1px 2px 4px;
+    border-color: gray;
+}
+
+.box4 {
+    background-color: #b0a18b;
+    height: 25px;
+    width: 25px;
+    border-radius: 20%;
+    padding-top: 8px;
+    border-width: 1px 2px 4px;
+    border-color: gray;
+}
+
+.lblCheckbox input[type="checkbox"] {
+    display: none;
+}
+/*Screen and seats*/
+
+/*Projections*/
+
+.projection-item {
+    /*display: inline-table;
+    width: auto;
+    margin: 10px;
+    padding: 3px;
+    background-color: white;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5);*/
+    margin: 5px;
+    padding: 5px;
+    background-color: #f1e7da;
+}
+
+.projection-item span {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0;
+}
+
+.projection-item label {
+    display: block;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: .5em;
+    font-size: 11px;
+}
+
+.projection-item div #reservationBtn {
+    color: #76323F;
+}
+
+.projection-item div #reservationBtn:hover {
+    text-decoration: underline;
+}
+
+.projectionsTable .projection-date {
+    font-size: 19px;
+    width: 200px;
+    text-align: center;
+}
+
+.projectionsTable .movie-projection-btn:hover {
+    color: #76323F;
+    text-decoration: none;
+}
+
+.projectionsTable tbody tr {
+    height: 60px;
+}
+
+.projectionsTable tbody tr:nth-child(even) {
+    background-color: rgba(206, 192, 170, 0.40);
+}
+
+.projectionsTable tbody tr:nth-child(odd) {
+    background-color: rgba(206, 192, 170, 0.70);
+}
+
+
+.projectionsTable tbody tr td {
+    padding: 15px;
+}
+
+.projection-time {
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: .5em;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.error-msg {
+    color: #a94442;
+}
+
+.projectionsTable .movie-projection-btn {
+    font-size: 18px;
+    margin: auto 10px;
+    color: rgba(0, 0, 0, 0.75);
+}
+/*Projections*/
+/*Offers*/
+.offer {
+    /*background-color: rgba(255,255,255, 0.6);*/
+    background-color: rgba(118, 50, 63, 0.1);
+    margin: 20px 10px 0px 10px;
+    min-height: 350px;
+    min-width: 340px;
+    border-radius: 10px;
+}
+
+.offer-img {
+    min-height: 215px;
+    min-width: 340px;
+    max-height: 215px;
+    max-width: 350px;
+    margin-bottom: 15px;
+}
+
+.offer-img img {
+    border-radius: 10px 10px 0px 0px;
+    object-fit: fill;
+}
+
+.offer-description {
+    height: 40px;
+    width: auto;
+    padding-top: 10px;
+}
+
+.offer-description h3 {
+    color: #76323F;
+    margin: 0px 20px;
+}
+
+.offer-description p {
+    padding: 0px 20px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: justify;
+}
+/*Offers*/
+
+/*Reservation*/
+.reservationDetails {
+    /*background-color: rgb(229, 208, 173);*/
+    /*background-color: rgb(228, 221, 212);*/
+    /*background-color: rgb(220, 208, 192);*/
+    background-color: #dcd0c0;
+    /*background-color: white;*/
+}
+
+/*Reservation*/
+.modal-header h4 {
+    color: black;
+}
+
+.blur-background {
+    padding: 20px;
+    color: rgba(0,0,0,0.7);
+    background-color: rgba(255,255,255, 0.6);
+    border-radius: 10px;
+}
+
+.white-background {
+    color: rgba(0,0,0,0.8);
+    background-color: white;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5);
+}
+
+/*Mini kartice za fimove i najave*/
+.homePage-list-item {
+    height: 300px;
+    width: 250px;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+.homePage-list-item .movie-card-image img {
+    height: 230px;
+    width: 100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+/*Mini kartice za fimove i najave*/
+.movie-list {
+    margin: 0px;
+}
+
+/*.home-movie-item {
+    margin: 10px;
+    padding: 0px;
+    width: 220px;
+    height: 300px;
+    border-radius: 8px;
+    /*box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+}*/
+
+@-webkit-keyframes mymove {
+    from {
+        bottom: 0px;
+    }
+    to {
+        bottom: 15px;
+    }
+}
+
+@keyframes mymove {
+    from {
+        bottom: 0px;
+    }
+
+    to {
+        bottom: 15px;
+    }
+}
+
+.home-movie-poster{
+    width: 270px;
+    height: 270px;
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.home-movie-poster img{
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.mini-movie-item{
+    width: 220px;
+    height: 300px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.movie-item {
+    color: rgba(0,0,0,0.7);
+    /*background-color: rgba(255,255,255, 0.8);*/
+    background-color: white;
+    max-width: 550px;
+    height: auto;
+    margin: 15px 15px 30px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5);
+}
+
+.movie-details-page{
+    min-width: 500px;
+}
+
+.coverImage {
+    min-width: 550px;
+    min-height: 250px;
+    max-height: 490px;
+}
+
+.synopsis {
+    display: block;
+    display: -webkit-box;
+    max-width: 330px;
+    height: 140px;
+    margin: 0 auto;
+    font-size: 14px;
+    text-align: justify;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.movie-poster {
+    margin-top: -30px;
+    width: 170px;
+    height: 240px;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.movie-poster img {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.movie-poster img:hover {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.mid-movie-poster {
+    width: 200px;
+    height: 270px;
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+}
+
+.mid-movie-poster img {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.movie-data {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: -230px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.movie-date label, .movie-data p {
+    color: rgba(0,0,0,0.6);
+}
+
+.movie-name a {
+    text-decoration: none;
+    color: black;
+}
+
+.movie-header {
+    position: relative;
+    margin-top: -180px;
+    margin-bottom: 20px;
+    height: 150px;
+    width: auto;
+    /*background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.6), rgba(0,0,0,0.4), rgba(0,0,0,0.2), rgba(0,0,0,0) );*/
+    /*background: -webkit-linear-gradient(-45deg, rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.65) 29%,rgba(0,0,0,0.28) 69%,rgba(0,0,0,0) 100%);*/
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.65) 29%,rgba(0,0,0,0.28) 69%,rgba(0,0,0,0) 100%);
+    /*background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));*/
+    border-top-left-radius: 8px;
+}
+
+.movie-header-img {
+    margin-top: -40px;
+    padding: 0px;
+}
+
+.movie-header-img img {
+    min-width: 100px;
+    min-height: 150px;
+    max-width: 250px;
+    max-height: 350px;
+}
+
+.movie-header-data {
+    /*margin-top: -330px;
+    margin-left: 280px;*/
+}
+
+.movie-header-data > h1, a {
+    color: white;
+    /*color: rgba(0, 0, 0, 0.9);*/
+}
+
+.movie-header-data > p {
+    font-size: 16px;
+    color: white;
+}
+
+.movie-title {
+    color: rgba(0,0,0,0.7);
+    font-weight: bold;
+}
+
+
+.movie-title:hover {
+    color: #90525e
+}
+
+.add-movie-btn {
+    float: right;
+}
+
+.mini-btn{
+    margin-left: 5px;
+}
+.mini-btn span:hover {
+    transform: scale(1.2, 1.2);
+}
+
+.hr-shadow {
+    border-top: 1px rgb(128, 128, 128); 
+    height:12px; 
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5); 
+    margin-top: 15px; 
+    margin-bottom:2px;
+}
+
+.hr-gray {
+    border-top: 1px solid #cfcfcf
+}
+
+
+/*KARTICA ZA FILMOVE I NAJAVE*/
+.movie-card {
+    background: #ffffff;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.movie-card-reservation {
+    /*min-width: 310px;*/
+    min-width: 150px;
+    width: 100%;
+    /*max-width: 320px;*/
+    /*min-height: 270px;*/
+    max-height: 270px;
+}
+
+.movie-card:hover {
+    -webkit-transform: scale(1.009);
+    transform: scale(1.009);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.movie-card-image{
+    padding: 0;
+    margin: 0;
+    width:100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.movie-card-image-reservation {
+    /*height: 320px;*/
+    height: auto;
+    /*max-height: 270px;*/
+}
+
+.movie-card-image img {
+    max-height: 270px;
+    max-width: 200px;
+    width: 100%;
+    border-top-left-radius: 10px;
+    /*border-top-right-radius: 10px;*/
+    border-bottom-left-radius: 10px;
+    background-size: contain;
+    background-position: 100% 100%;
+}
+
+.movie-card-content{
+    padding: 15px 0px 20px 0px;
+    margin: 0;
+}
+
+.movie-card-header, .movie-card-info{
+    display: table;
+    width: 100%;
+}
+
+.movie-card-header{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.movie-card-header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-card-header a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-card-title {
+    text-decoration: none;
+    margin: 0;
+    display: table-cell;
+}
+
+.movie-card-title:hover {
+    text-decoration: none;
+    color: #90525e;
+}
+
+.movie-card-info{
+    margin-top: 10px;
+}
+
+.card-info-section {
+    display: table-cell;
+    min-width: 50px !important;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1px 5px;
+}
+
+.card-info-section:first-of-type {
+    text-align: left;
+}
+
+.card-info-section:last-of-type {
+    text-align: right;
+}
+
+.card-info-section label {
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: .5em;
+    font-size: 9px;
+}
+
+.paypal-label {
+    text-transform: uppercase;
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: .5em;
+    font-size: 9px;
+}
+
+.card-info-section span {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: none;
+    margin: 0;
+}
+.card-info-section a{
+    color: #7a5a1f;
+    font-size: 12px;
+    text-transform: none;
+    margin: 0;
+}
+
+.card-info-section a:hover {
+    color: #90525e;
+}
+
+.movie-card-footer {
+    border-top: 1px solid gray;
+    padding: 15px 15px 5px 15px;
+    margin: 0;
+}
+
+.movie-card-footer a{
+    margin-bottom: 10px;
+}
+
+.movie-card-footer label {
+    display: inline;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: .5em;
+    font-size: 9px;
+}
+
+.movie-card-footer span {
+    font-weight: 700;
+    font-size: 11px;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+#reservationResult{
+    min-width: 400px;
+}
+
+.reservationDetails .movie-card-header h2 {
+    /*color: #4e380f;*/
+    color: rgba(0,0,0,0.7);
+}
+
+.reservationDetails .movie-card-header h2:hover {
+    /*color: #4e380f;*/
+    color: rgba(0,0,0,0.4);
+}
+
+.reservationDetails .card-info-section label {
+    /*color: rgba(122, 90, 31, 0.80);*/
+    color: #90525e;
+    font-size: 11px;
+}
+
+.reservationDetails .card-info-section span, .reservationDetails .card-info-section a {
+    /*color: #7a5a1f;*/
+    color: #76323F;
+    font-size: 14px;
+}
+
+/*KARTICA ZA REZERVACIJU*/
+
+.mini-btn-reservation {
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.nomargin {
+    margin: 0px;
+}
+
+.nopadding {
+    padding: 0px;
+}
+
+.movie-details {
+    color: black;
+    background-color: rgba(255,255,255, 0.6);
+    max-width: 550px;
+    width: auto;
+    height: auto;
+    margin: 15px;
+    padding: 15px;
+}
+
+.movie-create {
+    color: black;
+    background-color: rgba(255,255,255, 0.6);
+    width: auto;
+    height: auto;
+    margin: 15px;
+    padding: 15px;
+}
+
+#synopsis {
+    width: 100%;
+    max-width: 100%;
+    max-height: 20%;
+}
+
+.btn-form {
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.offer-create {
+    color: black;
+    background-color: rgba(255,255,255, 0.6);
+    width: 450px;
+    height: auto;
+    margin: 15px;
+    margin-left: 30%;
+    padding: 15px;
+}
+
+
+.reservation-div {
+    color: black;
+    background-color: rgba(255,255,255, 0.6);
+    width: 850px;
+    height: auto;
+    margin: 15px;
+    padding: 15px;
+}
+
+.dot {
+    height: 40px;
+    width: 40px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+
+.mini-round-btn {
+    min-width: 80px;
+    margin: 5px;
+    background-color: lightgray;
+    border-radius: 15px 15px;
+}
+
+.uploadBtn {
+    height: 35px;
+    margin: 10px;
+    font-size: xx-large;
+}
+
+.div-background {
+    color: black;
+    background-color: rgba(255,255,255, 0.6);
+    margin: 15px;
+    padding: 20px;
+}
+
+
+
+.mini-seat-btn {
+    color: rgba(0,0,0,0.8);
+    /*background-color: rgb(128, 128, 128);*/
+    background-image: url("Images/cinema-seat.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 2px;
+    height: 35px;
+    width: 35px;
+    display: inline;
+    min-height: 40px;
+    min-width: 43px;
+    max-height:40px;
+    max-width: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    padding: 12px;
+}
+
+.mini-seat-btn label{
+    margin: 1px;
+    color: white;
+    text-align: center;
+    min-height: 20px;
+    min-width: 16px;
+}
+
+.auditorium-card{
+    margin: 10px;
+    padding: 20px;
+    width: auto;
+    height: auto;
+    min-height: 180px;
+    min-width: 200px;
+}
+
+.seats-insert{
+    min-height: 150px;
+    height: auto;
+    margin: 20px 20px 30px 20px;
+    padding: 10px 10px 20px 10px;
+}
+
+
+
+
+.seatBox {
+    height: 30px;
+    width: 30px;
+    border-radius: 20%;
+    background-color: dodgerblue;
+    display: inline-block;
+}
+
+.seatBox > p {
+    margin-top: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+
+a {
+    /*color: #444343;*/
+    color: #383838;
+}
+
+a:hover {
+    color: #2b2a2a;
+}

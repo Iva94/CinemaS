@@ -1,0 +1,51 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.Projection>
+
+@{
+    ViewBag.Title = "Index";
+    var culture = ViewBag.Culture;
+}
+
+<div class="container">
+    <h2 class="page-title">
+        Projekcije
+        <a class="btn btn-default noborder margin-right-6" href="@Url.Action("Create", "Projections")" style="float:right">
+            <span class="glyphicon glyphicon-plus"></span>  Dodaj novu projekciju
+        </a>
+    </h2>
+    <hr class="hr-gray" />
+    <div class="row col-md-offset-1 col-sm-offset-1 ">
+        @foreach (var date in ViewData["ProjectionDates"] as IList<DateTime>)
+        {
+            if (date == ViewBag.DateSet)
+            {
+                <a class="btn btn-default round-btn my-btn col-md-2 active" href="@Url.Action("Index", "Projections", new { Date = date })">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    @date.ToString("dd. MMMM", culture)
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-default my-btn round-btn col-md-2" href="@Url.Action("Index", "Projections", new { Date = date })">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    @date.ToString("dd. MMMM", culture)
+                </a>
+            }
+        }
+    </div>
+    <hr class="hr-shadow" />
+    <br />
+    <div>
+        @Html.Partial("_ProjectionPartial")
+    </div>
+
+    <br />
+
+    <div class="modal" id="DeleteProjectionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>

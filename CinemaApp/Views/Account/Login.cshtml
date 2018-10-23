@@ -1,0 +1,54 @@
+﻿@using CinemaApp.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Prijava";
+}
+
+<div class="container" align="center">
+    <div class="my-background xs-form">
+        <h3 class="page-title">@ViewBag.Title</h3>
+        <hr class="hr-gray" />
+        <div style="margin: 20px 20px 10px">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.UserName) })
+                    </div>
+                    <div>@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })</div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Password) })
+                    </div>
+                    <div> @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" }) </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Prijavi se" class="btn btn-success btn-block" />
+                    </div>
+
+                    @*Enable this once you have account confirmation enabled for password reset functionality
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
+
+                    }
+                </section>
+
+        </div>
+        <hr class="hr-gray" />
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+        <hr class="hr-gray" />
+        <a href="@Url.Action("Register", "Account")"> Registracija </a>
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

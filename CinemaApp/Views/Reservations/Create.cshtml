@@ -1,0 +1,239 @@
+﻿@using CinemaApp.Models
+@model CinemaApp.Models.Reservation
+
+@{
+    ViewBag.Title = "Rezervacija";
+    var previous = "A";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal my-background big-form">
+            <h2 class="page-title text-center">Rezervacija</h2>
+            <hr class="hr-shadow" />
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                        <div class="img-responsive img-thumbnail">
+                            <img src="~/Images/@ViewBag.MovieImage" width="200" height="300" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                        <div class="movie-name">
+                            <h2 style="font-weight: 700">@ViewBag.MovieTitle</h2>
+                        </div>
+                        <br />
+                        <p style="font-size: larger">
+                            Datum:  <strong> @ViewBag.Date </strong>
+                        </p>
+                        <p style="font-size: larger">
+                            Vrijeme: <strong> @ViewBag.Time </strong>
+                        </p>
+                        <p style="font-size: larger">
+                            Cijena karte:  <strong> @ViewBag.TicketPrice KM </strong>
+                            <input type="hidden" id="ticketPrice" class="form-control" value="@ViewBag.TicketPrice" disabled />
+                        </p>
+                        <p style="font-size: larger">
+                            Sala:  <strong> @ViewBag.Auditorium </strong>
+                        </p>
+                        <hr class="hr-gray" />
+                        <p style="font-size: larger">
+                            Broj karata:  <strong class="lblNumberOfTickets"> 0 </strong>
+                            @Html.EditorFor(model => model.NumberOfTickets, new { htmlAttributes = new { @class = "form-control", @id = "numberOfTickets", @style = "display: none; visibility: hidden" } })
+                        </p>
+                        <p style="font-size: larger">
+                            Ukupna cijena:  <strong class="lblTotalPrice"> 0 KM </strong>
+                            @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", @id = "totalPrice", @style = "display: none; visibility: hidden" } })
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" align="center">
+                    <br />
+                    <h4 style="text-align: center">Odaberite sjedište:</h4>
+                    <div class="screen" align="center">
+                        <div class="outer-mask">
+                            <div class="inner-mask">
+                                <div class="content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.NumOfReservedSeats != 0)
+                    {
+                        var i = 1;
+                        foreach (var seat in ViewData["seats"] as IList<Seat>)
+                        {
+                            if (seat.Row != previous)
+                            {
+                                <br />
+                                <br />
+                                <label style="font-size: larger; margin-right: 15px;">@((char)('A' + ((i++) - 1)))</label>
+                            }
+
+                            var isReservedSeat = false;
+
+                            foreach (var reserved in ViewData["reservedSeats"] as IList<ReservedSeat>)
+                            {
+                                if (reserved.SeatId == seat.SeatId)
+                                {
+                                    isReservedSeat = true;
+                                }
+                            }
+                            if (isReservedSeat)
+                            {
+                                <label class="lblCheckbox btn box3" id="@seat.SeatId" href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number">
+                                    <input type="checkbox" class="seat " name="seats" value="@seat.SeatId" id="@seat.SeatId" autocomplete="off" checked disabled>
+                                </label>
+                            }
+                            else
+                            {
+                                <label class="lblCheckbox btn box" id="@seat.SeatId" href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number">
+                                    <input type="checkbox" class="seat" name="seats" value="@seat.SeatId" id="@seat.SeatId" autocomplete="off">
+                                </label>
+                            }
+                            previous = seat.Row;
+                        }
+                    }
+                    else
+                    {
+                        var i = 1;
+                        foreach (var seat in ViewData["seats"] as IList<Seat>)
+                        {
+                            if (seat.Row != previous)
+                            {
+                                <br />
+                                <br />
+                                <label style="font-size: larger; margin-right: 15px;">@((char)('A' + ((i++) - 1)))</label>
+                            }
+                            <label class="lblCheckbox btn box" id="@seat.SeatId" href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number">
+                                <input type="checkbox" class="seat" name="seats" value="@seat.SeatId" id="@seat.SeatId" autocomplete="off">
+                            </label>
+                            previous = seat.Row;
+                        }
+                    }
+
+                    <hr class="hr-gray" />
+                    <div>
+                        <label class="lblCheckbox btn box"> </label> Slobodno
+                        <label class="lblCheckbox btn box3 margin-left-10"> </label> Rezervisano
+                        <label class="lblCheckbox btn box2 margin-left-10"> </label> Odabrano mjesto
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-6 col-md-offset-3">
+                        <input type="button" id="btnConfirmReservation" value="Rezerviši" data-target="#ConfirmReservation" data-toggle="modal" class="btn btn-success" />
+                        <a class="btn btn-default" href="@Url.Action("Repertoire", "Movies")"> Odustani </a>
+                        <div class="modal" id="ConfirmReservationModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                        <h2 style="text-align: center">Rezervacija</h2>
+                                    </div>
+                                    <div class="modal-body alert alert-success">
+                                        <h3 style="font-weight: 700">@ViewBag.MovieTitle</h3>
+                                        <p style="font-size: larger">
+                                            Datum:  <strong> @ViewBag.Date </strong>
+                                        </p>
+                                        <p style="font-size: larger">
+                                            Vrijeme: <strong> @ViewBag.Time </strong>
+                                        </p>
+                                        <p style="font-size: larger">
+                                            Cijena karte:  <strong> @ViewBag.TicketPrice KM </strong>
+                                            <input type="hidden" id="ticketPrice" class="form-control" value="@ViewBag.TicketPrice" disabled />
+                                        </p>
+                                        <p style="font-size: larger">
+                                            Sala:  <strong> @ViewBag.Auditorium </strong>
+                                        </p>
+                                        <p style="font-size: larger">
+                                            Broj karata:  <strong class="lblNumberOfTickets"> </strong>
+                                        </p>
+                                        <p style="font-size: larger">
+                                            Ukupna cijena:  <strong class="lblTotalPrice"> </strong>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success btn-block">Potvrdite rezervaciju</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal" id="SelectSeatModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="alert alert-danger">Odaberite sjedište!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var numberOfTickets = 0;
+            var ticketPrice = $("#ticketPrice").val();
+            var totalPrice = 0;
+
+            $('.seat').click(function () {
+                if (this.checked) {
+                    if (this.parentElement.id == this.id) {
+                        this.parentElement.classList.add("box2");
+                    }
+                }
+                else {
+                    if (this.parentElement.id == this.id) {
+                        this.parentElement.classList.remove("box2");
+                    }
+                }
+                numberOfTickets += this.checked ? 1 : -1;
+                totalPrice = numberOfTickets * ticketPrice;
+
+                $(".lblNumberOfTickets").empty();
+                $(".lblNumberOfTickets").append(numberOfTickets.toString());
+
+                $(".lblTotalPrice").empty();
+                $(".lblTotalPrice").append(totalPrice.toString() + " KM");
+
+                $("#numberOfTickets").val(numberOfTickets);
+                $("#totalPrice").val((totalPrice));
+
+                var numOfTickets = $("#numberOfTickets").val(numberOfTickets);
+            });
+
+            $('#btnConfirmReservation').click(function () {
+                if (numberOfTickets > 0) {
+                    $('#ConfirmReservationModal').modal('show');
+                }
+                else {
+                    $('#SelectSeatModal').modal('show');
+                }
+            });
+            
+        });
+    </script>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+

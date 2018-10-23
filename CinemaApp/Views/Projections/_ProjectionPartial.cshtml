@@ -1,0 +1,46 @@
+﻿@using CinemaApp.Models
+
+@model IEnumerable<CinemaApp.Models.Projection>
+@{
+    ViewBag.Title = "projectionPartial";
+}
+
+<table class="table table-striped table-bordered projectionsTable">
+    @foreach(var movie in ViewData["moviesOnDate"] as IList<Movie>)
+    {
+    <tr>
+        <td class="col-md-2 movie-name" align="center">
+            <div style="min-width:120px; height:auto; max-height:300px; max-width: 150px;">
+                <img src="~/Images/@Html.DisplayFor(modelItem => movie.Image)" class="img-rounded img-responsive img-thumbnail" style="width: 100%; height:100%;" />
+            </div>
+            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })">
+                <h4 class="movie-title">@Html.DisplayFor(modelItem => movie.MovieTitle)</h4>
+            </a>
+        </td>
+        <td class="col-md-10">
+            @foreach (var projection in movie.Projections)
+            {
+                if (projection.DateTime.Value.Date == ViewBag.DateSet)
+                {
+                    <div class="col-md-2 list-group-item projection-item">
+                        <h4 class="projection-time text-center">
+                            @projection.DateTime.Value.ToShortTimeString()
+                        </h4>
+                        <hr class="hr-gray" />
+                        <label>Sala: <span>@projection.Auditorium.AuditoriumName</span> </label>
+                        <label>Cijena karte: <span>@projection.TicketPrice.Value.ToString() KM </span></label>
+                        <div align="center" style="margin: 10px 0px;">
+                            <a id="reservationBtn" class="text-center" href="@Url.Action("Index", "Reservations", new { projection = projection.ProjectionId })">Prikaz rezervacija</a>
+                        </div>
+                        <hr class="hr-gray nomargin" />
+                        <div align="right" style="min-height:15px; padding: 5px; margin: 5px;">
+                            <a class="mini-btn" data-target="#DeleteProjectionModal" data-toggle="modal" style="color: black; float: right" href="@Url.Action("Delete", "Projections", new { id = projection.ProjectionId })"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="mini-btn" href="@Url.Action("Edit", "Projections", new { id = projection.ProjectionId })" style="color: black; float: right"><span class="glyphicon glyphicon-pencil"></span></a>
+                        </div>
+                    </div>
+                }
+            }
+        </td>
+    </tr>
+    }
+</table>

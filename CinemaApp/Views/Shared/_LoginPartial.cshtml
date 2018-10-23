@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+<ul class="nav navbar-nav navbar-right loginNav">
+    @*<li>
+                @Html.ActionLink("Zdravo, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Odjava</a></li>*@
+
+    <li class="dropdown">
+        <a href="#" class="dropbtn nopadding" style="padding: 0; margin-top: 10px;">
+            <img id="user-img" src="~/Content/Images/user.png" width="32" height="32"/>
+            @User.Identity.GetUserName()
+        </a>
+        <ul class="dropdown-content">
+            @*<li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Manage" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("Podešavanje naloga", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>*@
+            @if (User.IsInRole("Administrator"))
+            {
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MyReservations" ? "activePage" : "")">@Html.ActionLink("Moje rezervacije", "MyReservations", "Reservations")</li>
+            }
+            <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Manage" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("Profil", "Details", "Users")</li>
+            <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Manage" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("Promjena lozinke", "ChangePassword", "Manage")</li>
+            <li class="nav-divider"></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Odjava</a></li>
+        </ul>
+    </li>
+
+</ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right loginNav">
+        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+        <li>@Html.ActionLink("Prijava", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

@@ -1,0 +1,95 @@
+﻿@model CinemaApp.Models.Auditorium
+
+@{
+    ViewBag.Title = "Sale";
+}
+
+<div class="container" align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal my-background small-form" align="center">
+            <h2 class="page-title text-center">Izmjena podataka o sali</h2>
+            <hr class="hr-gray" />
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.AuditoriumId)
+            <div id="auditorium">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AuditoriumName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.AuditoriumName, new { htmlAttributes = new { @class = "form-control", @id = "auditoriumName" } })
+                        @Html.ValidationMessageFor(model => model.AuditoriumName, "", new { @class = "text-danger" })
+                        <p style="color: #a94442;">@ViewBag.Message</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control", @id = "capacity" } })
+                        @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfRows, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.NumberOfRows, new { htmlAttributes = new { @class = "form-control", @id = "numOfRows" } })
+                        @Html.ValidationMessageFor(model => model.NumberOfRows, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div id="seats" class="seats-insert hidden" style="height: auto">
+
+            </div>
+
+            <div id="errorMsg" class="col-md-12 col-lg-12">
+                <label class="label-danger"></label>
+            </div>
+            <br />
+            <hr class="hr-gray" />
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" id="saveBtn" value="Sačuvaj" class="btn btn-success" />
+                    <a class="btn btn-default" href="@Url.Action("Details", "Auditoriums", new { id = Model.AuditoriumId })"> Odustani </a>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#numOfRows').on('input', function () {
+                var num = $('#numOfRows').val();
+                if (num == "" || num == 0) {
+                    $('#seats').addClass(" hidden");
+                    $('#saveBtn').removeAttr("disabled");
+                }
+                else {
+                    $('#seats').empty();
+                    $('#seats').append('<hr class="hr-gray" /><h4> Unesite broj sjedišta za svaki red: </h4>');
+                    var j = 0;
+                    for (var i = 0; i < num; i++) {
+                        if (j > 25) {
+                            j = 0;
+                            var row = String.fromCharCode(65 + (j++));
+                        }
+                        else {
+                            var row = String.fromCharCode(65 + (j++));
+                        }
+                        $('#seats').append('<div class="col-md-3"><label>' + row + '</label><input type="number" min="1" class="form-control numOfSeats" name="numOfSeats" value="" required /></div>');
+                    }
+                    $('#seats').after('<br />');
+                    $('#seats').removeClass("hidden");
+                }
+            });
+        });
+    </script>
+}

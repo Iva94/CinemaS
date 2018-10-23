@@ -1,0 +1,235 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.Reservation>
+
+@{
+    ViewBag.Title = "Rezervacije";
+
+    var endTime = DateTime.UtcNow.AddSeconds(65);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+}
+
+<div class="container">
+    <h2 class="page-title">Vaše rezervacije</h2>
+    <hr class="hr-gray nomargin" />
+    <div class="row" style="margin: 15px 5px;">
+        @{ var i = 0;}
+        @foreach (var item in Model.OrderBy(p => p.Projection.DateTime))
+        {
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="movie-card movie-card-reservation reservation nomargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 nomargin nopadding">
+                        <div class="movie-card-image movie-card-image-reservation ">
+                            <img src="~/Images/@Html.DisplayFor(modelItem => item.Projection.Movie.Image)" class="img-responsive" />
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <div class="movie-card-content">
+                            <div class="movie-card-header">
+                                <a href="@Url.Action("Details", "Movies", new { id = item.Projection.Movie.MovieId })">
+                                    <h3 class="movie-card-title">@Html.DisplayFor(modelItem => item.Projection.Movie.MovieTitle)</h3>
+                                </a>
+                                <br />
+                            </div>
+                            <div class="movie-card-info">
+                                <div class="card-info-section">
+                                    <label>Datum</label>
+                                    <span>@item.Projection.DateTime.Value.ToString("dd.MM.yyyy.")</span>
+                                </div>
+                                <div class="card-info-section">
+                                    <label>Vrijeme</label>
+                                    <span>@item.Projection.DateTime.Value.ToShortTimeString()</span>
+                                </div>
+                                <div class="card-info-section">
+                                    <label>  Sala  </label>
+                                    <span>@Html.DisplayFor(modelItem => item.Projection.Auditorium.AuditoriumName)</span>
+                                </div>
+                                <div class="card-info-section">
+                                    <label>Sjediste</label>
+                                    @{ var numOfSeats = 0; }
+                                    @foreach (var seat in ViewData["allReservedSeats"] as IList<ReservedSeat>)
+                                    {
+                                        if (seat.ReservationId == item.ReservationId && seat.ProjectionId == item.ProjectionId)
+                                        {
+                                            <span style="margin-right: 5px;">@seat.Seat.Row@seat.Seat.Number </span>
+                                            numOfSeats++;
+                                            if (numOfSeats > 1)
+                                            {
+                                                <br />
+                                                numOfSeats = 0;
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="card-info-section">
+                                    <label>Ukupna cijena</label>
+                                    <span id="totalPrice_@i">@Html.DisplayFor(modelItem => item.TotalPrice)</span> <span> KM</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-left: 5px; margin-top: 10px;">
+                                @if (item.IsConfirmed != true)
+                                {
+                                    <label class="paypal-label">Plati rezervaciju</label>
+                                    <div id="paypal-button_@i"></div>
+                                }
+                                else
+                                {
+                                    <br />
+                                    <span style="font-weight: 700; font-size: 12px; margin-bottom: 10px;">Rezervacija je plaćena!</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="movie-card-footer">
+                            @*<a class="btn btn-danger btn-block" href="@Url.Action("Delete", "Reservations", new { id = item.ReservationId  })">Otkaži</a>*@
+                            @*<a class="btn btn-danger btn-block cancelReservationBtn" data-target="#DeleteReservationModal" data-toggle="modal" data-id="@item.ReservationId">Otkažite rezervaciju</a>*@
+                            <a class="btn btn-danger btn-block" data-target="#DeleteReservationModal" data-toggle="modal" href="@Url.Action("Delete", "Reservations", new { id = item.ReservationId })">Otkažite rezervaciju</a>
+                            @Html.HiddenFor(modelItem => item.ExpireTime, new { @class = "expiredTime", @id = "expiredTime" + i + "" })
+                            @if (item.IsConfirmed != true)
+                            {
+                                <label>Rezervacija ističe za: </label> <span id="countdown_@i"></span>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+    <br />
+    <br />
+</div>
+
+
+<div class="modal" id="DeleteReservationModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.cancelReservationBtn').click(function () {
+        var id = $(this).data('id');
+        $('.modal-footer #reservationId').val(id);
+
+        //$('#reservationId').empty();
+        //$('#reservationId').append(this.data('id'));
+
+    });
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var expiredTimeInputs = document.getElementsByClassName('expiredTime');
+        for (var i = 0; i < expiredTimeInputs.length; i++) {
+            countdown('countdown_' + i + '', 'expiredTime' + i + '');
+        }
+    });
+
+    function countdown(element, time) {
+        // Set the date we're counting down to
+        var element = document.getElementById(element);
+        var expiredTime = document.getElementById(time).value;
+        var countDownDate = new Date(expiredTime).getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+
+            var result = (days > 0) ? days + "d " : " ";
+            result += hours + "h " + minutes + "m " + seconds + "s ";
+
+            element.innerHTML = result;
+
+            //element.innerHTML = days + "dan/a " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                element.innerHTML = "Vaša rezervacija je istekla!";
+            }
+        }, 1000);
+    }
+</script>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    var reservations = document.getElementsByClassName('reservation');
+    for (var i = 0; i < reservations.length; i++) {
+
+        // Render the PayPal button
+        paypal.Button.render({
+            // Set your environment
+            env: 'sandbox', // sandbox | production
+
+            // Specify the style of the button
+            style: {
+                layout: 'vertical',  // horizontal | vertical
+                size: 'medium',    // medium | large | responsive
+                shape: 'rect',      // pill | rect
+                color: 'gold'       // gold | blue | silver | white | black
+            },
+
+            // Specify allowed and disallowed funding sources
+            //
+            // Options:
+            // - paypal.FUNDING.CARD
+            // - paypal.FUNDING.CREDIT
+            // - paypal.FUNDING.ELV
+            funding: {
+                allowed: [
+                    //paypal.FUNDING.CARD,
+                    //paypal.FUNDING.CREDIT
+                ],
+                disallowed: [
+                    paypal.FUNDING.CARD,
+                    paypal.FUNDING.CREDIT]
+            },
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+            client: {
+                sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                production: '<insert production client id>'
+            },
+
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: {
+                                    total: '3.00',
+                                    currency: 'USD'
+                                }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute()
+                    .then(function () {
+                        window.alert('Uspješno plaćanje!');
+                    });
+            }
+        }, "#paypal-button_" + i);
+    }
+</script>

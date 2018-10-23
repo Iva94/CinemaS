@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/Content/Images/cinema_icon.png" type="image/x-icon" />
+    <title>@ViewBag.Title - Bioskop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-light bg-light myNavbar">
+        <div class="container inNavbar">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("bioskop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand nav-name" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("NASLOVNA", "Index", "Home")</li>
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Repertoire" ? "activePage" : "")">@Html.ActionLink("REPERTOAR", "Repertoire", "Movies")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Soon" ? "activePage" : "")">@Html.ActionLink("USKORO", "Soon", "Movies")</li>
+                        <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "SpecialOffers" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("SPECIJALNE PONUDE", "Index", "SpecialOffers")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropbtn">
+                                FILMOVI
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-content">
+                                <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Movies" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("Filmovi", "Index", "Movies")</li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Soon" ? "activePage" : "")">@Html.ActionLink("Najave", "Soon", "Movies")</li>
+                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Projections" ? "activePage" : "")">@Html.ActionLink("Projekcije", "Index", "Projections")</li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Repertoire" ? "activePage" : "")">@Html.ActionLink("Repertoar", "Repertoire", "Movies")</li>
+                            </ul>
+                        </li>
+                        <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "SpecialOffers" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("PONUDE", "Index", "SpecialOffers")</li>
+                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Auditoriums" ? "activePage" : "")">@Html.ActionLink("SALE", "Index", "Auditoriums")</li>
+                        <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Reservations" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("REZERVACIJE", "Index", "Reservations")</li>
+                        <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "Users" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("KORISNICI", "Index", "Users")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Customer"))
+                    {
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Repertoire" ? "activePage" : "")">@Html.ActionLink("REPERTOAR", "Repertoire", "Movies")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Soon" ? "activePage" : "")">@Html.ActionLink("USKORO", "Soon", "Movies")</li>
+                        <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "SpecialOffers" && ViewContext.RouteData.Values["Action"].ToString() == "Index") ? "activePage" : "")">@Html.ActionLink("SPECIJALNE PONUDE", "Index", "SpecialOffers")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MyReservations" ? "activePage" : "")">@Html.ActionLink("REZERVACIJE", "MyReservations", "Reservations")</li>
+                    }
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "activePage" : "")">@Html.ActionLink("KONTAKT", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="body-content main-container">
+        @RenderBody()
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+
+    <div class="footer">
+        <footer>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 footer-margins nopadding footer-links" align="center">
+                    <a class="nomargin nav-name" href="@Url.Action("Index", "Home")">bioskop</a>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 footer-margins nopadding footer-links" align="center">
+                    <br />
+                    @Html.ActionLink("Repertoar", "Index", "Movies", new { area = "" }, new { @class = "margin-right-10" }) |
+                    @Html.ActionLink("Uskoro", "Soon", "Movies", new { area = "" }, new { @class = "margin-right-10 margin-left-10" }) |
+                    @Html.ActionLink("O aplikaciji", "About", "Home", new { area = "" }, new { @class = "margin-right-10 margin-left-10" }) |
+                    @Html.ActionLink("Kontakt", "Contact", "Home")
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 footer-margins nopadding social-media" align="center">
+                    <br />
+
+                    <a href="@Url.Content("https://www.facebook.com/")" target="_blank"><img src="~/Content/Images/facebook.png" /></a>
+                    <a href="@Url.Content("https://www.twitter.com/")" target="_blank"><img src="~/Content/Images/twitter.png" /></a>
+                    <a href="@Url.Content("https://www.instagram.com/")" target="_blank"><img src="~/Content/Images/instagram.png" /></a>
+                    <a href="@Url.Content("https://www.youtube.com/")" target="_blank"><img src="~/Content/Images/youtube.png" /></a>
+                </div>
+            </div>
+        </footer>
+        <hr />
+        <p class="copyRight">&copy; @DateTime.Now.Year - Bioskop</p>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+</body>
+</html>

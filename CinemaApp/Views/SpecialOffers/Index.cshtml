@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CinemaApp.Models.SpecialOffer>
+
+@{
+    ViewBag.Title = "Posebne ponude";
+}
+
+<div class="container">
+    <h2 class="page-title">
+        Posebne ponude
+        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+        {
+            <a class="btn btn-3d btn-xlg btn-default noborder margin-right-6 padding-10 mini-btn" href="@Url.Action("Create", "SpecialOffers")" style="float:right">
+                <span class="glyphicon glyphicon-plus"></span>  Dodaj novu ponudu
+            </a>
+        }
+    </h2>
+    <hr class="hr-shadow" />
+    <br />
+    <div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+            <div class="offer">
+                <div class="offer-img">
+                    <img src="~/Images/@Html.DisplayFor(modelItem => item.OfferImage)" class="img-responsive" />
+                </div>
+                <div class="offer-description">
+                    <h3>
+                        @Html.DisplayFor(modelItem => item.OfferName)
+                        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                        {
+                                <a class="btn mini-btn nomargin" data-target="#DeleteOfferModal" data-toggle="modal" href="@Url.Action("Delete", "SpecialOffers", new { id = item.OfferId })" style="padding: 8px; float:right">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                                
+                                <a class="btn mini-btn" href="@Url.Action("Edit", "SpecialOffers", new { id = item.OfferId})" style="padding: 8px; float:right">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                        }
+                    </h3>
+                    <br />
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
+
+<div class="modal" id="DeleteOfferModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

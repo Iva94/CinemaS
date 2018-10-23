@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CinemaApp.Models.ReservedSeat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Projection.ProjectionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Projection.Auditorium.AuditoriumName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reservation.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seat.Row)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Projection.ProjectionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Projection.Auditorium.AuditoriumName)
+            <br />
+            @for (int i = 0; i <= item.Projection.Auditorium.NumberOfRows; i++)
+            {
+                <label>@((char)('A' + (i - 1)))</label>
+
+                for (int j = 0; j <= item.Projection.Auditorium.NumberOfColumns; j++)
+                {
+                   <button style="width: 30px">@j</button>
+                }
+                
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reservation.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seat.Row)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ReservedSeatId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ReservedSeatId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ReservedSeatId })
+        </td>
+    </tr>
+}
+    
+</table>
+
+<div class="row">
+   
+</div>

@@ -1,0 +1,49 @@
+﻿@using CinemaApp.Models
+
+@model IEnumerable<CinemaApp.Models.User>
+
+<table class="table userTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewData["admins"] as IList<User>)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                <a href="mailto:@Html.DisplayFor(modelItem => item.Email)"> @Html.DisplayFor(modelItem => item.Email)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                <a data-target="#DeleteUserModal" data-toggle="modal" href="@Url.Action("Delete", "Users", new { id = item.UserId })">Izbriši</a> |
+                @Html.ActionLink("Ukloni administratora", "RemoveAdminRole", new { userName = item.UserName, roleName = "Administrator" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,90 @@
+﻿@model CinemaApp.Models.SpecialOffer
+
+@{
+    ViewBag.Title = "Nova ponuda";
+}
+<div class="container" align="center">
+    @using (Html.BeginForm("Create", "SpecialOffers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal my-background small-form" align="center">
+            <h2 class="page-title text-center">Nova ponuda</h2>
+            <hr class="hr-gray" />
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.OfferName, "Naziv ponude:", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.OfferName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OfferName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, "Opis ponude:", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.Description, 3, 40, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OfferImage, "Poster:", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div id="posterUploadBtn" class="btn btn-default btn-block">
+                        <input type="file" name="OfferImageFile" id="OfferImageFile" role="button" aria-label="Dodaj poster" tabindex="-1" style="font-size: 70px; height: 5px; width: auto; opacity: 0;">
+                        <span class="glyphicon glyphicon-upload"> </span>
+                        <h4> Dodaj poster </h4>
+                    </div>
+                    <div id="posterDiv" class="row btn-block" style="display:none; visibility: hidden">
+                        <img id="newPoster" src="#" class="img-responsive" alt="" style=" display: none; width: auto; height: auto; max-width: 250px; max-height: 200px; background-size: cover; margin-left: 5px; margin-bottom: 5px;">
+                        <button type="button" id="removePosterBtn" class="btn btn-danger"> Ukloni</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="hr-gray" />
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="Sačuvaj" class="btn btn-success" />
+                    <a class="btn btn-default" href="@Url.Action("Index", "SpecialOffers")"> Odustani </a>
+                </div>
+            </div>
+        </div>
+     }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function readPosterURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#newPoster').attr('src', e.target.result);
+                    $('#newPoster').css('display', 'block');
+                    $('#posterUploadBtn').css('display', 'none');
+                    $('#posterUploadBtn').css('visibility', 'hidden');
+                    $('#posterDiv').css('display', 'block');
+                    $('#posterDiv').css('visibility', 'visible');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#OfferImageFile").change(function () {
+            readPosterURL(this);
+        });
+
+        $("#removePosterBtn").click(function () {
+            $('#posterDiv').css('display', 'none');
+            $('#posterDiv').css('visibility', 'hidden');
+            $('#posterUploadBtn').css('display', 'block');
+            $('#posterUploadBtn').css('visibility', 'visible');
+        });
+
+    </script>
+}

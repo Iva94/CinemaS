@@ -1,0 +1,42 @@
+﻿@model CinemaApp.Models.ReservedSeat
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReservedSeat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Projection.ProjectionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Projection.ProjectionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reservation.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seat.Row)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seat.Row)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservedSeatId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

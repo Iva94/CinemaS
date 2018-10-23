@@ -1,0 +1,219 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.Reservation>
+
+@{
+    ViewBag.Title = "Rezervacije";
+    var previous = "A";
+    var Culture = ViewBag.Culture;
+}
+
+<div class="container">
+    <h2 class="page-title">Rezervacije</h2>
+    <hr class="hr-gray"/>
+    <input type="hidden" id="projection" value="@ViewBag.Projection" />
+    <div class="row">
+        @if (ViewBag.Projection == null)
+        {
+            <div class="col-md-12" id="searchReservation">
+                <div class="form-horizontal">
+                    <div class="row col-md-offset-1">
+                        @using (Html.BeginForm("Index", "Reservations", FormMethod.Post))
+                        {
+                            <div class="col-sm-4 col-md-4 form-group">
+                                @Html.Label("Movie", "Odaberite film:")
+                                @Html.DropDownList("Movie", new SelectList((System.Collections.IEnumerable)ViewData["movies"], "MovieId", "MovieTitle"), htmlAttributes: new { @class = "form-control", @name = "movie" })
+                            </div>
+                            <div class="col-sm-4 col-md-4 form-group">
+                                <label>Odaberite termin prikazivanja filma:</label>
+                                <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" />
+                                @*@Html.EditorFor(model => model.PremiereDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })*@
+
+                            </div>
+                            <div class="col-sm-4 col-md-3 form-group">
+                                <br />
+                                <button type="submit" class="btn btn-default btn-block fineReservationBtn"><span class="glyphicon glyphicon-search span-right-margin"></span>Pronađite rezervacije</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <hr class="hr-gray" />
+            </div>
+        }
+
+        @if (ViewBag.HasResults == true)
+        {
+            <div class="col-md-12" id="reservationResult">
+                <div style="margin: 10px;">
+                    @try
+                    {
+                        <div class="col-md-5">
+                            <div class="col-sm-3 col-md-6" style="max-height: 600px; max-width: 300px;">
+                                <img src="~/Images/@ViewBag.MovieImage" class="img-responsive img-rounded img-thumbnail" style="width:100%; height: auto;" />
+                            </div>
+                            <div class="col-sm-3 col-md-6">
+                                <h2>@ViewBag.MovieTitle</h2>
+                                <label>Datum:</label> @ViewBag.Date <br />
+                                <label>Vrijeme:</label> @ViewBag.Time <br />
+                                <label>Sala: </label> @ViewBag.Auditorium <br />
+                                <label>Cijena karte: </label> @ViewBag.TicketPrice KM<br />
+                            </div>
+                        </div>
+                        <div class="col-md-7" align="center">
+                            <div class="screen" align="center">
+                                <div class="outer-mask">
+                                    <div class="inner-mask">
+                                        <div class="content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @{ var i = 1;
+                                var reservationId = 0;
+                            }
+                            @foreach (var seat in ViewData["seats"] as IList<Seat>
+                                )
+                            {
+                                if (seat.Row != previous)
+                                {
+                                    <br />
+                                    <br />
+                                    <label style="font-size: larger; margin-right: 15px;">@((char)('A' + ((i++) - 1)))</label>
+                                }
+
+                                var isReservedSeat = false;
+                                var isActive = true;
+
+                                foreach (var reserved in ViewData["reservedSeats"] as IList<ReservedSeat>
+                                    )
+                                {
+                                    if (reserved.SeatId == seat.SeatId)
+                                    {
+                                        isReservedSeat = true;
+                                        reservationId = reserved.ReservationId;
+                                        foreach (var item in ViewData["expiredReservations"] as IList<Reservation>
+                                            )
+                                        {
+                                            if (item.ReservationId == reserved.ReservationId)
+                                            {
+                                                isActive = false;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (isReservedSeat)
+                                {
+                                    if (isActive)
+                                    {
+                                        <a class="lblCheckbox btn box2 my-btn" id="my-btn" data-target="#ReservationDetailsModal" data-toggle="modal" href="@Url.Action("Details", "Reservations", new { id = reservationId })" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number"> </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="lblCheckbox btn box4 my-btn" data-target="#ReservationDetailsModal" data-toggle="modal" href="@Url.Action("Details", "Reservations", new { id = reservationId })" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number"> </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="lblCheckbox btn box" id="@seat.SeatId" href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number"> </a>
+                                }
+
+                                previous = seat.Row;
+                            }
+
+                            <br />
+                            <hr class="hr-gray" />
+                            <br />
+                            <div>
+                                <label class="lblCheckbox btn box"></label> Slobodno
+                                <label class="lblCheckbox btn box2 margin-left"></label> Zauzeto
+                                <label class="lblCheckbox btn box4 margin-left"></label> Istekla rezervacija
+                            </div>
+                        </div>
+
+                    }
+                    catch
+                    {
+
+                    }
+                    <br />
+                    <h3 class="text-warning te">@ViewBag.Message</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12" align="center">
+                    <h4 style="color: #a94442">@ViewBag.Message</h4>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="popover" id="popoverDiv" role="dialog">
+    <div class="popover-title">
+        Title
+    </div>
+    <div class="popover-content">
+        nestooo
+    </div>
+</div>
+
+<div class="modal" id="ReservationDetailsModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<script>
+    function GetDateList() {
+        debugger;
+        var movieId = $("#movieDropDown").val();
+        $.ajax
+            ({
+                url: '/Reservations/GetDateList',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    movieId: +movieId
+                }),
+                success: function (result) {
+                    $("#dateDropDown").html("");
+                    $.each($.parseJSON(result), function (i, movieProjections) {
+                        $("#dateDropDown").append
+                            ($('<option></option>').val(movieProjections.ProjectionId).html(movieProjections.DateTime))
+                    })
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+    }
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.my-btn').hover(function () {
+            $('[data-toggle="modal"]').popover();
+        });
+
+        $('[data-toggle="popover"]').popover();
+
+        var projection = $('#projection').val();
+        $(this).load(function () {
+            if (projection != null) {
+                $('#searchReservation').css('display', 'none');
+            }
+            else {
+                $('#searchReservation').css('display', 'block');
+                $('#reservationResult').css('display', 'none');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,77 @@
+﻿@using CinemaApp.Models
+@model CinemaApp.Models.Auditorium
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="my-background">
+        <h2 class="page-title margin-right-20">
+            @Html.DisplayFor(model => model.AuditoriumName)
+            <a class="btn btn-default noborder" data-target="#DeleteAuditoriumModal" data-toggle="modal" href="@Url.Action("Delete", "Auditoriums", new { id = Model.AuditoriumId })" style="float:right">
+                <span class="glyphicon glyphicon-trash"></span>  Obriši
+            </a>
+            <a class="btn btn-default noborder margin-right-10 mini-btn" href="@Url.Action("Edit", "Auditoriums", new { id = Model.AuditoriumId })" style="float:right">
+                <span class="glyphicon glyphicon-pencil"></span>  Izmjeni
+            </a>
+        </h2>
+        <hr class="hr-gray" />
+        <div class="row auditorium-card">
+            <div class="col-sm-12 col-md-2 col-lg-2">
+                <p style="font-size: 16px;">
+                    Kapacitet sale: <strong>@Html.DisplayFor(model => model.Capacity)</strong>
+                    <br />
+                    Broj redova: <strong>@Html.DisplayFor(model => model.NumberOfRows)</strong>
+                </p>
+                <hr class="hr-gray" />
+                <br />
+                <br />
+            </div>
+            <div class="col-sm-12 col-md-10 col-lg-10">
+                <div class="container-fluid" align="center">
+                    @if (ViewBag.numOfSeats == 0)
+                    {
+                        <label>Unesite brojeve sjedista za svaki red</label>
+                        <button>Unesi</button>
+                    }
+                    else
+                    {
+                        <div class="screen" align="center">
+                            <div class="outer-mask">
+                                <div class="inner-mask">
+                                    <div class="content"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        for (var i = 1; i <= Model.NumberOfRows; i++)
+                        {
+                            <br />
+                            <br />
+                            <label class="margin-right-10" style="font-size: 16px;">@((char)('A' + (i - 1)))</label>
+                            foreach (var seat in ViewData["seats"] as IList<Seat>)
+                            {
+                                if (seat.Row.Contains((char)('A' + (i - 1))))
+                                {
+                                    <a class="lblCheckbox btn box" id="@seat.SeatId" href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@seat.Row @seat.Number">
+                                        <input type="checkbox" class="seat" name="seats" value="@seat.SeatId" id="@seat.SeatId" autocomplete="off">
+                                    </a>
+                                }
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="DeleteAuditoriumModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>

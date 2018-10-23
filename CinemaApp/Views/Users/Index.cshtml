@@ -1,0 +1,35 @@
+﻿@using CinemaApp.Models
+
+@model IEnumerable<CinemaApp.Models.User>
+
+@{
+    ViewBag.Title = "Korisnici";
+}
+<div class="container">
+    <br />
+    <br />
+    <ul class="nav nav-tabs nav-tabs-justified userTabs">
+        <li class="active">
+            <a href="#users" data-toggle="tab">Korisnici</a>
+        </li>
+        <li>
+            <a href="#admins" data-toggle="tab">Administratori</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="users">
+            @Html.Partial("_UserPartial")
+        </div>
+        <div class="tab-pane fade" id="admins">
+            @Html.Partial("_AdminPartial")
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="DeleteUserModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+

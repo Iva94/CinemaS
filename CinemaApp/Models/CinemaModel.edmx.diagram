@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a9b9be960f0438d92ba38049f6fb2da" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="cinemaDatabaseModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Movie" Width="1.375" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Projection" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Reservation" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.ReservedSeat" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Role" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Seat" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.SpecialOffer" Width="1.5" PointX="9.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.User" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.UserClaim" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.UserLogin" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_PROJECTI_MOVIE_PRO_MOVIE" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_RESERVAT_RESERVATI_PROJECTI" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_RESERVED_PROJECTIO_PROJECTI" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_Reservation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_RESERVED_SEAT_RESE_RESERVAT" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_RESERVED_RESERVED__SEAT" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_dbo_UserClaim_dbo_User_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_dbo_UserLogin_dbo_User_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="cinemaDatabaseModel.UserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Genre" Width="1.5" PointX="0.625" PointY="1.875" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_Movie_Genre" ManuallyRouted="true" >
+          <ConnectorPoint PointX="0.62499999999999956" PointY="3.47068359375" />
+          <ConnectorPoint PointX="0.2105855901208793" PointY="3.8456835937499996" />
+          <ConnectorPoint PointX="0.2105855901208793" PointY="13.123943307692308" />
+          <ConnectorPoint PointX="0.375" PointY="13.123943307692308" />
+          <ConnectorPoint PointX="0.75105669230769234" PointY="13.5" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="cinemaDatabaseModel.Auditorium" Width="1.5" PointX="0.75" PointY="8.75" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_Projection_Auditorium" />
+        <AssociationConnector Association="cinemaDatabaseModel.FK_Seat_Auditorium" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

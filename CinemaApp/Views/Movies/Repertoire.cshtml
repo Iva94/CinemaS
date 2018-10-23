@@ -1,0 +1,57 @@
+﻿@using CinemaApp.Models
+@model IEnumerable<CinemaApp.Models.Movie>
+
+@{
+    ViewBag.Title = "Repertoar";
+    var culture = ViewBag.Culture;
+}
+
+<div class="container">
+    @*<h2 class="page-title"> Repertoar </h2>*@
+    <br />
+    <div id="repertoire-btns">
+        <input type="hidden" id="dateSet" value="@ViewBag.DateSet">
+        <div class="row col-md-offset-1" align="center">
+            @if (ViewBag.DateSet != "")
+            {
+                <a class="btn btn-default round-btn my-btn col-md-1" id="all-movies-btn" href="@Url.Action("Repertoire", "Movies")"> Svi filmovi </a>
+            }
+            else
+            {
+                <a class="btn btn-default round-btn my-btn col-md-1 active" id="all-movies-btn" href="@Url.Action("Repertoire", "Movies")"> Svi filmovi </a>
+            }
+
+            @foreach (var date in ViewData["dates"] as IList<DateTime>)
+            {
+                if (ViewBag.DateSet != "" && ViewBag.DateSet == culture.DateTimeFormat.GetDayName(date.DayOfWeek))
+                {
+                    <a class="btn btn-default round-btn my-btn col-md-1 active" href="@Url.Action("Repertoire", "Movies", new { Date = date })">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        @culture.DateTimeFormat.GetDayName(date.DayOfWeek)
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-default my-btn round-btn col-md-1 btns" href="@Url.Action("Repertoire", "Movies", new { Date = date })">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        @culture.DateTimeFormat.GetDayName(date.DayOfWeek)
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <hr class="hr-shadow" />
+    <br />
+
+    <div class="movies">
+        <input type="hidden" id="dateSet" value="@ViewBag.DateSet">
+        @if (ViewBag.DateSet == "")
+        {
+            @Html.Partial("_AllMoviesPartial")
+        }
+        else
+        {
+            @Html.Partial("_MoviePartial")
+        }
+    </div>
+</div>

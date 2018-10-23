@@ -1,0 +1,70 @@
+﻿@using CinemaApp.Models
+
+<div class="container">
+    <div class="row">
+        @foreach (var image in (IEnumerable<string>)ViewBag.Images)
+        {
+            <div class="col-lg-4 col-md-4 col-sm-6 btn oldImageBtn">
+                <img src="@Url.Content(image)" class="img-responsive" alt="Image" style="width:300px; height: 150px; margin-left: 5px; margin-bottom: 5px;">
+                <a class="btn btn-3d btn-xlg btn-default noborder margin-right-6 padding-10 mini-btn" href=" @Url.Action("RemovePhotoFromSlideShow", "Home", new { image = image })" style="color: white; margin-top: -50px; float:right">
+                    <span id="removeImageSpan" class="glyphicon glyphicon-remove"> </span>
+                </a>
+            </div>
+        }
+        <div class="col-lg-12 col-md-12 col-sm-12" align="center">
+            <hr />
+            @using (Html.BeginForm("UploadPhotosSlideShow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="col-md-6 col-md-offset-3">
+                    <div id="uploadBtn" class="btn btn-default btn-block">
+                        <input type="file" name="ImageFile" id="ImageFile" role="button" aria-label="Dodaj fotografiju" tabindex="-1" style="font-size: 80px; height: 5px; width: auto; opacity: 0;">
+                        <span class="glyphicon glyphicon-upload"> </span>
+                        <h4> Dodaj fotografiju </h4>
+
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div id="uploadedPhotoDiv" class="row btn-block" style="display:none; visibility: hidden">
+                    <div class="homeUploadImg">
+                        <img id="newImage" src="#" class="img-responsive" alt="" style="width:auto; height: auto; object-fit:contain">
+                    </div>
+                    <div id="buttons">
+                        <br />
+                        <input type="button" id="removePhotoBtn" value="Ukloni" class="btn btn-danger" style="width: 200px" />
+                        <input type="submit" value="Sačuvaj" class="btn btn-success" style="width: 200px" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#newImage').attr('src', e.target.result);
+                $('#uploadBtn').css('display', 'none');
+                $('#uploadBtn').css('visibility', 'hidden');
+                $('#uploadedPhotoDiv').css('display', 'block');
+                $('#uploadedPhotoDiv').css('visibility', 'visible');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#ImageFile").change(function () {
+        readURL(this);
+    });
+
+    $("#removePhotoBtn").click(function () {
+        $('#uploadedPhotoDiv').css('display', 'none');
+        $('#uploadedPhotoDiv').css('visibility', 'hidden');
+        $('#uploadBtn').css('display', 'block');
+        $('#uploadBtn').css('visibility', 'visible');
+    });
+</script>

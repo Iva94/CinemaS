@@ -1,0 +1,76 @@
+﻿@using CinemaApp.Models
+
+@model IEnumerable<CinemaApp.Models.Movie>
+@{
+    ViewBag.Title = "moviePartial";
+    var noProjections = 0;
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        if (item.IsAnnouncement == false)
+        {
+            var haveProjection = false;
+            foreach (var projection in item.Projections)
+            {
+                if (projection.DateTime.Value.ToShortDateString() == ViewBag.Date)
+                {
+                    haveProjection = true;
+                    noProjections++;
+                }
+            }
+
+            if (haveProjection)
+            {
+            <div class="col-sm-12 col-md-12 col-lg-6 movie-item ">
+                <div class="movie-poster">
+                    <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })">
+                        <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" />
+                    </a>
+                </div>
+                <div class="movie-data">
+                    <div class="movie-name">
+                        <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })">
+                            <h3 class="movie-title">@Html.DisplayFor(modelItem => item.MovieTitle)</h3>
+                        </a>
+                    </div>
+                    <label>@Html.DisplayFor(modelItem => item.OriginalTitle)</label> |
+                    <label>@Html.DisplayFor(modelItem => item.Genre1.GenreName)</label> |
+                    <label>@Html.DisplayFor(modelItem => item.Duration)</label>
+                    <br />
+                    <p class="synopsis">@Html.DisplayFor(modelItem => item.Synopsis)</p>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <hr class="hr-shadow" />
+                    <label>Izaberite vrijeme projekcije i rezervišite sjedište: </label>
+                    <br>
+                    @foreach (var it in item.Projections.OrderBy(p => p.DateTime))
+                    {
+                        if (it.DateTime.Value.ToShortDateString() == ViewBag.Date)
+                        {
+                            if (it.DateTime >= DateTime.Now)
+                            {
+                                <a class="btn btn-default" href="@Url.Action("ReservateTickets", "Movies", new { movieId = item.MovieId, projectionId = it.ProjectionId  })">
+                                    <h4 class="nomargin">@it.DateTime.Value.ToShortTimeString()</h4>
+                                </a>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            }
+        }
+    }
+
+    @if(noProjections == 0)
+    {
+        <div align="center">
+            <div class="my-background2">
+                <img src="~/Content/Images/cinema.png" height="60" width="60" />
+                <h3>Nije pronađena nijedna projekcija u bazi!</h3>
+            </div>
+        </div>
+    }
+</div>

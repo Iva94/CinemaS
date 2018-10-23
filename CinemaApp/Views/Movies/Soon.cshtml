@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CinemaApp.Models.Movie>
+
+@{
+    ViewBag.Title = "Uskoro";
+}
+
+<div class="container">
+    <h2 class="page-title">
+        Uskoro
+        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+        {
+            <a class="btn btn-3d btn-xlg btn-default noborder margin-right-6 padding-10 mini-btn" href="@Url.Action("Create", "Movies", new { isAnnouncement = 1 })" style="float:right">
+                <span class="glyphicon glyphicon-plus"></span>  Dodaj najavu
+            </a>
+        }
+    </h2>
+    <hr class="hr-shadow" />
+    <br />
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (item.IsAnnouncement == true)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-6 movie-item">
+                    <div class="movie-poster">
+                        <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })">
+                            <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" />
+                        </a>
+                    </div>
+                    <div class="movie-data">
+                        <div class="movie-name">
+                            <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })">
+                                <h3 class="movie-title">@Html.DisplayFor(modelItem => item.MovieTitle)</h3>
+                            </a>
+                            @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                            {
+                                <div style="float:right; position: absolute; margin-left: 280px; margin-top: -30px;">
+                                    <a class="mini-btn" href="@Url.Action("Edit", "Movies", new { id = item.MovieId  })"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="mini-btn" data-target="#DeleteMovieModal" data-toggle="modal" href="@Url.Action("Delete", "Movies", new { id = item.MovieId  })"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            }
+                        </div>
+                        <label>@Html.DisplayFor(modelItem => item.OriginalTitle)</label> |
+                        <label>@Html.DisplayFor(modelItem => item.Genre1.GenreName)</label> |
+                        <label>@Html.DisplayFor(modelItem => item.Duration)</label>
+                        <br />
+                        <p class="synopsis">@Html.DisplayFor(modelItem => item.Synopsis)</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="modal" id="DeleteMovieModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

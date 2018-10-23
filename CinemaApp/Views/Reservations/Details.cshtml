@@ -1,0 +1,82 @@
+﻿@using CinemaApp.Models
+@model CinemaApp.Models.Reservation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+    var i = 0;
+}
+
+<div class="modal-header">
+    <button class="close" data-dismiss="modal" style="font-size: 35px;">&times;</button>
+    <h2 class="nav-name text-center nomargin">Bioskop</h2>
+</div>
+<div class="modal-body nomargin reservationDetails">
+    <div class="movie-card-content">
+        <div class="movie-card-header nomargin">
+            <a href="@Url.Action("Details", "Movies", new { id = Model.Projection.Movie.MovieId })">
+                <h2 class="movie-card-title">@Html.DisplayFor(model => model.Projection.Movie.MovieTitle)</h2>
+            </a>
+        </div>
+        <br />
+        <div class="movie-card-info reservationDetails">
+            <div class="card-info-section">
+                <label>Datum</label>
+                <span>@Model.Projection.DateTime.Value.ToString("dd/MM/yyyy.", ViewBag.Culture)</span> <br />
+            </div>
+            <div class="card-info-section">
+                <label>Vrijeme</label>
+                <span>@Model.Projection.DateTime.Value.ToShortTimeString()</span>
+            </div>
+            <div class="card-info-section">
+                <label>Sala</label>
+                <span>@Html.DisplayFor(model => model.Projection.Auditorium.AuditoriumName)</span>
+            </div>
+            <div class="card-info-section">
+                <label>Sjediste</label>
+                @foreach (var seat in ViewData["ReservedSeats"] as IList<ReservedSeat>)
+                {
+                    <span style="margin-right: 5px;">@seat.Seat.Row@seat.Seat.Number </span>
+                }
+            </div>
+            <div class="card-info-section">
+                <label>Ukupna cijena</label>
+                <span>@Html.DisplayFor(model => model.TotalPrice) KM</span>
+            </div>
+        </div>
+        <br />
+        <div class="movie-card-info reservationDetails">
+            <div class="card-info-section">
+                <label>Ime i prezime</label>
+                <span style="font-size: 18px">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName) </span>
+            </div>
+            <div class="card-info-section">
+                <label>E-mail</label>
+                <span><a href="mailto:@Html.DisplayFor(model => model.User.Email)">@Html.DisplayFor(model => model.User.Email)  </a> </span>
+                </div>
+            <div class="card-info-section">
+                <label>Datum i vrijeme rezervisanja</label>
+                <span>@Model.ReservationTime.Value.ToString("dd/MM/yyyy HH:mm", ViewBag.Culture)</span>
+            </div>
+        </div>
+    </div>
+    <div class="movie-card-footer" align="right">
+        <div class="card-info-section">
+            <label>Status rezervacije</label><br />
+            <span style="text-transform: none;">
+                @if (Model.IsConfirmed == true)
+                {
+                <b>Plaćena</b>
+                }
+                else if (Model.IsActive == true)
+                {
+                <b>Aktivna</b>
+                }
+                else
+                {
+                <b>Neaktivna</b>
+                }
+            </span>
+        </div>
+    </div>
+</div>
